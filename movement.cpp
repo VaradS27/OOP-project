@@ -1,53 +1,71 @@
 #include "movement.h"
-#include <SFML/Graphics.hpp>
-#include <cmath>
 
+#include <SFML/Graphics.hpp>
+
+#include "math.h"
 using namespace std;
 
-// Constructor initializes the position, rotation and speed
-Movement::Movement() : x(400), y(300), rotation(0), speed(5.0f) {}
+Movement::Movement()
+    : x(400),
+      y(300),
+      rotation(0),
+      speed(5.0f),
+      minX(0),
+      minY(0),
+      maxX(800),
+      maxY(600) {}
+// change maxX and maxY if we change the size of the game
 
-// Moves the object forward in the direction it's facing
 void Movement::moveForward() {
-  float angle = rotation * 3.14159265f / 180.f; // Convert rotation from degrees to radians
-  float moveX = speed * cos(angle); // Calculate movement in x direction
-  float moveY = speed * sin(angle); // Calculate movement in y direction
-  x = x + moveX; // Update x position
-  y = y + moveY; // Update y position
+  // Calculate new position after moving forward
+  float newX = x + speed * cos(rotation * 3.14159265f / 180.f);
+  float newY = y + speed * sin(rotation * 3.14159265f / 180.f);
+
+  // Check if the new position is within the boundaries
+  if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
+    x = newX;
+    y = newY;
+  }
 }
 
-// Moves the object backward in the direction it's facing
 void Movement::moveBackward() {
-  float angle = rotation * 3.14159265f / 180.f; // Convert rotation from degrees to radians
-  float moveX = speed * cos(angle); //  movement in x direction
-  float moveY = speed * sin(angle); // movement in y direction
-  x = x - moveX; // Update x position
-  y = y - moveY; // Update y position
+  // Calculate new position after moving backward
+  float newX = x - speed * cos(rotation * 3.14159265f / 180.f);
+  float newY = y - speed * sin(rotation * 3.14159265f / 180.f);
+
+  // Check if the new position is within the boundaries
+  if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
+    x = newX;
+    y = newY;
+  }
 }
 
-// Rotates the object to the left
 void Movement::rotateLeft() {
-  float rotateAmount = 3.0f; // rotation amount
-  rotation = rotation - rotateAmount; // Decrease rotation
-  if (rotation < 0.0f) { // rotation is negative, make it positive by adding 360
-    rotation = rotation + 360.0f;
+  rotation -= 3.0f;
+  if (rotation < 0.0f) {
+    rotation += 360.0f;
   }
 }
 
-// Rotates the object to the right
 void Movement::rotateRight() {
-  float rotateAmount = 3.0f; // rotation amount
-  rotation = rotation + rotateAmount; // Increase rotation
-  if (rotation >= 360.0f) { // rotation is greater than or equal to 360, subtract 360 to keep it within [0,360)
-    rotation = rotation - 360.0f;
+  rotation += 3.0f;
+  if (rotation >= 360.0f) {
+    rotation -= 360.0f;
   }
 }
+
+void Movement::setBounds(float minX, float minY, float maxX, float maxY) {
+  this->minX = minX;
+  this->minY = minY;
+  this->maxX = maxX;
+  this->maxY = maxY;
+}
+
+void Movement::updateBounds() {}
 
 // Getter for x position
 float Movement::getX() { return x; }
-
 // Getter for y position
 float Movement::getY() { return y; }
-
 // Getter for rotation
 float Movement::getRotation() { return rotation; }

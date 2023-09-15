@@ -2,21 +2,27 @@
 #define MOVEMENT_H
 
 class Movement {
- public:
-  Movement(); // default constructor for movement
-  void moveForward();
-  void moveBackward();
-  void rotateLeft();
-  void rotateRight();
-  float getX();
-  float getY();
-  float getRotation();
+public:
+    Movement(); // default constructor
+    void moveForward();
+    void moveBackward();
+    void rotateLeft();
+    void rotateRight();
+    void setBounds(float minX, float minY, float maxX, float maxY);
+    void updateBounds();
+    float getX();
+    float getY();
+    float getRotation();
 
- private:
-  float x;
-  float y;
-  float rotation;
-  float speed;
+private:
+    float x;
+    float y;
+    float rotation;
+    float speed;
+    float minX; // Minimum X boundary
+    float minY; // Minimum Y boundary
+    float maxX; // Maximum X boundary
+    float maxY; // Maximum Y boundary
 };
 
 #endif

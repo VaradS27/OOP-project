@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+
 #include "background.h"
 #include "playerOne.h"
 using namespace sf;  // Use the sf namespace for SFML classes
@@ -12,6 +13,9 @@ int main() {
   RenderWindow window(VideoMode(800, 600), "Tank v1 Game");
   Background background;  // Background object
   PlayerOne player;       // This is the playerOne Object
+  Movement movement;
+  // Set boundaries to match the game window size
+  movement.setBounds(0, 0, 800, 600);
 
   while (window.isOpen()) {  // while the window is open
     Event event;
