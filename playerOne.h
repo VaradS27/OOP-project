@@ -10,6 +10,8 @@ class PlayerOne {
  private:
   RectangleShape tankRect;
   Movement movement;
+  float barrelLength;
+  RectangleShape barrelRect;
 
  public:
   PlayerOne();         // default constructor

@@ -8,6 +8,8 @@ Background::Background() {
   backgroundRect.setSize(Vector2f(800.0f, 600.0f));
   backgroundRect.setFillColor(Color::Green);
   backgroundRect.setPosition(0.0f, 0.0f);
+  backgroundRect.setOutlineThickness(5.0f);  // thickness of outline
+  backgroundRect.setOutlineColor(Color::Black);
 }
 
 void Background::draw(RenderWindow& window) {
