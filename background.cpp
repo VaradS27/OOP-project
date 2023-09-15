@@ -10,7 +10,7 @@ Background::Background() {
   backgroundRect.setPosition(0.0f, 0.0f);
 }
 
-void Background::draw(sf::RenderWindow& window) {
+void Background::draw(RenderWindow& window) {
   // Draw the background to the window
   window.draw(backgroundRect);
 }

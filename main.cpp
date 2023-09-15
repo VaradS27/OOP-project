@@ -4,6 +4,8 @@
 #include "playerOne.h"
 using namespace sf;  // Use the sf namespace for SFML classes
 
+// g++ -Wall main.cpp background.cpp movement.cpp playerOne.cpp -lsfml-graphics -lsfml-window -lsfml-system
+
 int main() {
   // Currently the window is on a 4:3 ratio
   // ****can be changed later****
