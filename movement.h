@@ -14,7 +14,7 @@ public:
     float getY();
     float getRotation();
 
-private:
+protected:
     float x;
     float y;
     float rotation;

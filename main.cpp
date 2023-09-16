@@ -29,6 +29,7 @@ int main() {
     // Handle player input here and update player position/rotation
     player.handleInput();  // Call the handleInput method of the player object
                            // to handle user input
+    player.ShootingInput(player); // Calls the shooting inputs
     window.clear();        // Clear the window
     background.draw(window);  // Draw the background onto the window
     player.draw(window);      // Draw the player onto the window

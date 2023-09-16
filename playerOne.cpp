@@ -1,7 +1,8 @@
 #include "playerOne.h"
+#include "movement.h"
 
 #include <iostream>
-using namespace sf;
+using namespace sf; 
 
 PlayerOne::PlayerOne() {
   // Set the size and color of the player's tank (blue rectangle)
@@ -13,6 +14,10 @@ PlayerOne::PlayerOne() {
 
   // * Note: To adjust the starting position, it must be done in the
   // movement.cpp file in the default constructor *
+
+  // shooting ammo 
+  ammo = new Shooting[ammo_count]; // 100 bullets
+
 }
 
 void PlayerOne::handleInput() {
@@ -31,6 +36,12 @@ void PlayerOne::handleInput() {
   }
 }
 
+void PlayerOne::ShootingInput(PlayerOne p1) {
+  // Handles the player's input for shooting
+    if (sf::Keyboard::isKeyPressed(Keyboard::Space)) {
+    p1.fire();         // fire the bullet
+  }
+}
 void PlayerOne::draw(RenderWindow& window) {
   // Update the tank's position and rotation
   tankRect.setPosition(movement.getX(), movement.getY());
@@ -38,4 +49,22 @@ void PlayerOne::draw(RenderWindow& window) {
 
   // Draw the tank to the window
   window.draw(tankRect);
+
+  // Draw the bullets
+  for(int i = 0; i < ammo_count; ++i){
+    if(ammo[i].isShot()){
+      ammo[i].move();
+      ammo[i].draw(&window); // could be an issue *check*
+    }
+  }
+}
+
+// shooting for player 1
+void PlayerOne::fire(){
+  for(int i = 0; i < ammo_count; ++i){
+     if(!ammo[i].isShot()){
+        ammo[i].useShot(tankRect.getPosition()); // get the position of tank 
+        break;
+     }
+  }
 }
