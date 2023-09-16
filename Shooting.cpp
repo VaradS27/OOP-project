@@ -15,7 +15,7 @@ void Shooting::set_position(sf::Vector2f position){
     body->setPosition(position);
 }
 void Shooting::move(){
-    body->move(5,5);
+    body->move(0,-1); // change this 
 }
 bool Shooting::isShot(){
     return shot;
