@@ -5,7 +5,7 @@
 #include "playerOne.h"
 using namespace sf;  // Use the sf namespace for SFML classes
 
-// g++ -Wall main.cpp background.cpp movement.cpp playerOne.cpp -lsfml-graphics -lsfml-window -lsfml-system
+// g++ -Wall main.cpp background.cpp Shooting.cpp movement.cpp playerOne.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
 int main() {
   // Currently the window is on a 4:3 ratio
@@ -29,6 +29,7 @@ int main() {
     // Handle player input here and update player position/rotation
     player.handleInput();  // Call the handleInput method of the player object
                            // to handle user input
+    player.ShootingInput(player);
     window.clear();        // Clear the window
     background.draw(window);  // Draw the background onto the window
     player.draw(window);      // Draw the player onto the window
