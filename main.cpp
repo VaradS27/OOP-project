@@ -8,14 +8,12 @@ using namespace sf;  // Use the sf namespace for SFML classes
 // g++ -Wall main.cpp background.cpp Shooting.cpp movement.cpp playerOne.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
 int main() {
-  // Currently the window is on a 4:3 ratio
-  // ****can be changed later****
-  RenderWindow window(VideoMode(800, 600), "Tank v1 Game");
+  RenderWindow window(VideoMode(1920, 1080), "Tank v1 Game");
   Background background;  // Background object
   PlayerOne player;       // This is the playerOne Object
   Movement movement;
   // Set boundaries to match the game window size
-  movement.setBounds(0, 0, 800, 600);
+  movement.setBounds(0, 0, 1920, 1080);
 
   while (window.isOpen()) {  // while the window is open
     Event event;
