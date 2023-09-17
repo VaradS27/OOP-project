@@ -1,3 +1,6 @@
+#ifndef SHOOT_H
+#define SHOOT_H
+
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
@@ -19,3 +22,5 @@ class Shooting {
   void useShot(Vector2f position, float tankRotation);
   ~Shooting();
 };
+
+#endif
