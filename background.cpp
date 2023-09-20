@@ -7,7 +7,7 @@ Background::Background() {
   // Set the size of the background
   backgroundRect.setSize(Vector2f(1920.0f, 1080.0f));
   backgroundRect.setPosition(0.0f, 0.0f);
-  if (!backgroundTexture.loadFromFile("grassBackground.jpg")) {
+  if (!backgroundTexture.loadFromFile("grassBackground.png")) {
     // handle error...
   }
   backgroundRect.setTexture(&backgroundTexture);
