@@ -2,16 +2,21 @@
 #define PLAYERONE_H
 
 #include <SFML/Graphics.hpp>
+
 #include "Shooting.h"
 #include "movement.h"
 using namespace sf;
 
-class PlayerOne{
+class PlayerOne {
  private:
   RectangleShape tankRect;
   Movement movement;
+  float barrelLength;
+  RectangleShape barrelRect;
   Shooting* ammo;
   int ammo_count = 1000;
+  Texture tankTexture;
+  Texture tankBarrelTexture;
 
  public:
   PlayerOne();         // default constructor

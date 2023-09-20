@@ -2,18 +2,35 @@
 
 #include <iostream>
 
+#include "math.h"
 #include "movement.h"
 using namespace sf;
-
+// Tank Game Texture supplied by Credit "Kenney.nl" and "www.kenney.nl"
+// https://opengameart.org/content/topdown-tanks
 PlayerOne::PlayerOne() {
   // Set the size and color of the player's tank (blue rectangle)
-  tankRect.setSize(Vector2f(50.0f, 30.0f));  // adjust the size as needed
-  tankRect.setFillColor(Color::Blue);
-  // Sets the origin of the tank to its center - so it wont rotate from the
-  // corner
+  tankRect.setSize(Vector2f(50.0f, 50.0f));  // adjust the size as needed
   tankRect.setOrigin(tankRect.getSize().x / 2.0f, tankRect.getSize().y / 2.0f);
-  // shooting ammo
-  ammo = new Shooting[ammo_count];  // 100 bullets
+
+  // Set the size and color of the barrel (black rectangle)
+  barrelRect.setSize(Vector2f(45.0f, 10.0f));  // adjust the size as needed
+  barrelRect.setOrigin(barrelRect.getSize().x / 2.0f, barrelRect.getSize().y / 2.0f);
+  // Adjust the length of the barrel as needed
+  barrelLength = 20.0f;
+
+  if (!tankTexture.loadFromFile("tankBlue.png")) {
+    // handle error...
+  }
+  if (!tankBarrelTexture.loadFromFile("tankBarrelBlue.png")) {
+    // handle error...
+  }
+
+  tankTexture.setRepeated(true);
+  tankRect.setTexture(&tankTexture);
+  tankBarrelTexture.setRepeated(true);
+  barrelRect.setTexture(&tankBarrelTexture);
+
+  ammo = new Shooting[ammo_count];  // 1000 bullets
 }
 
 void PlayerOne::handleInput() {
@@ -38,14 +55,24 @@ void PlayerOne::ShootingInput(PlayerOne p1) {
     p1.fire();  // fire the bullet
   }
 }
+
 void PlayerOne::draw(RenderWindow& window) {
   // Update the tank's position and rotation
   tankRect.setPosition(movement.getX(), movement.getY());
   tankRect.setRotation(movement.getRotation());
 
+  // Calculate the position and rotation of the barrel
+  float barrelX = movement.getX() +
+                  barrelLength * cos(movement.getRotation() * M_PI / 180.f);
+  float barrelY = movement.getY() +
+                  barrelLength * sin(movement.getRotation() * M_PI / 180.f);
+  barrelRect.setPosition(barrelX, barrelY);
+  barrelRect.setRotation(movement.getRotation());
+
   // Draw the tank to the window
   window.draw(tankRect);
-
+  // Draw the barrel of the tank to the window
+  window.draw(barrelRect);
   // Draw the bullets
   for (int i = 0; i < ammo_count; ++i) {
     if (ammo[i].isShot()) {
@@ -59,7 +86,18 @@ void PlayerOne::draw(RenderWindow& window) {
 void PlayerOne::fire() {
   for (int i = 0; i < ammo_count; ++i) {
     if (!ammo[i].isShot()) {
-      ammo[i].useShot(tankRect.getPosition(), movement.getRotation());
+      // Calculate the initial position of the bullet based on the barrel
+      Vector2f bulletPosition = barrelRect.getPosition();
+
+      // Calculate an offset based on the length of the barrel
+      float offset = barrelLength;
+      Vector2f bulletOffset(
+          offset * cos(movement.getRotation() * M_PI / 180.f),
+          offset * sin(movement.getRotation() * M_PI / 180.f));
+      bulletPosition += bulletOffset;
+
+      // Set the position and angle for the bullet
+      ammo[i].useShot(bulletPosition, movement.getRotation());
       break;
     }
   }

@@ -1,9 +1,12 @@
+#ifndef SHOOT_H
+#define SHOOT_H
+
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
 class Shooting {
  private:
-  RectangleShape* body;
+  CircleShape* body; // Changed from RectangleShape* to CircleShape*
   bool shot;
   float angle;
   float bulletSpeed;
@@ -19,3 +22,5 @@ class Shooting {
   void useShot(Vector2f position, float tankRotation);
   ~Shooting();
 };
+
+#endif

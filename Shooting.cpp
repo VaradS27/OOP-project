@@ -4,8 +4,10 @@
 using namespace sf;
 
 Shooting::Shooting() {
-  body = new sf::RectangleShape(Vector2f(5, 5));
-  body->setFillColor(sf::Color(255, 0, 0));  // color 'RED' for the bullet
+  body = new CircleShape(5.0f);  // Changed from RectangleShape to CircleShape
+  body->setFillColor(Color::White);  // Changed color to 'WHITE' for the bullet
+  body->setOutlineThickness(5.0f);  // Set outline thickness
+  body->setOutlineColor(Color::Black);  // Set outline color to 'BLACK'
   shot = false;
   bulletSpeed = 2.0f;
 }

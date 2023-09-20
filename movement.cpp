@@ -12,14 +12,14 @@ Movement::Movement()
       speed(5.0f),
       minX(0),
       minY(0),
-      maxX(800),
-      maxY(600) {}
+      maxX(1920),
+      maxY(1080) {}
 // change maxX and maxY if we change the size of the game
 
 void Movement::moveForward() {
   // Calculate new position after moving forward
-  float newX = x + speed * cos(rotation * 3.14159265f / 180.f);
-  float newY = y + speed * sin(rotation * 3.14159265f / 180.f);
+  float newX = x + speed * cos(rotation * M_PI / 180.f);
+  float newY = y + speed * sin(rotation * M_PI / 180.f);
 
   // Check if the new position is within the boundaries
   if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
@@ -30,8 +30,8 @@ void Movement::moveForward() {
 
 void Movement::moveBackward() {
   // Calculate new position after moving backward
-  float newX = x - speed * cos(rotation * 3.14159265f / 180.f);
-  float newY = y - speed * sin(rotation * 3.14159265f / 180.f);
+  float newX = x - speed * cos(rotation * M_PI / 180.f);
+  float newY = y - speed * sin(rotation * M_PI / 180.f);
 
   // Check if the new position is within the boundaries
   if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
