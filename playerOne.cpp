@@ -14,7 +14,8 @@ PlayerOne::PlayerOne() {
 
   // Set the size and color of the barrel (black rectangle)
   barrelRect.setSize(Vector2f(45.0f, 10.0f));  // adjust the size as needed
-  barrelRect.setOrigin(barrelRect.getSize().x / 2.0f, barrelRect.getSize().y / 2.0f);
+  barrelRect.setOrigin(barrelRect.getSize().x / 2.0f,
+                       barrelRect.getSize().y / 2.0f);
   // Adjust the length of the barrel as needed
   barrelLength = 20.0f;
 
@@ -49,10 +50,15 @@ void PlayerOne::handleInput() {
   }
 }
 
-void PlayerOne::ShootingInput(PlayerOne p1) {
+void PlayerOne::ShootingInput(PlayerOne p1, sf::Event event) {
   // Handles the player's input for shooting
-  if (sf::Keyboard::isKeyPressed(Keyboard::Space)) {
-    p1.fire();  // fire the bullet
+  // if (sf::Keyboard::isKeyPressed(Keyboard::Space)) {
+  //   p1.fire();  // fire the bullet
+  // }
+  if (event.type == sf::Event::KeyReleased) {
+    if (event.key.code == sf::Keyboard::Space) {
+      p1.fire();
+    }
   }
 }
 
