@@ -84,8 +84,8 @@ void PlayerTwo::draw(RenderWindow& window) {
 
       // Check if the bullet is off-screen
       Vector2f bulletPosition = ammo[i].getPosition();
-      if (bulletPosition.x < 0 || bulletPosition.x > window.getSize().x ||
-          bulletPosition.y < 0 || bulletPosition.y > window.getSize().y) {
+      if (bulletPosition.x < 0 || bulletPosition.x > 1920 ||
+          bulletPosition.y < 0 || bulletPosition.y > 1080) {
         ammo[i].reload();  // Reload the bullet if it's off-screen
       }
     }
