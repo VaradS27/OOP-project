@@ -9,7 +9,7 @@ Shooting::Shooting() {
   body->setOutlineThickness(5.0f);  // Set outline thickness
   body->setOutlineColor(Color::Black);  // Set outline color to 'BLACK'
   shot = false;
-  bulletSpeed = 2.0f;
+  bulletSpeed = 5.0f;
 }
 
 void Shooting::draw(RenderWindow* win) {
@@ -27,6 +27,7 @@ void Shooting::move() {
   body->move(moveX, moveY);
 }
 
+void Shooting::reload() {shot = false;}
 bool Shooting::isShot() { return shot; }
 
 void Shooting::useShot(Vector2f position, float tankRotation) {

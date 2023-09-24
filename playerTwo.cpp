@@ -51,8 +51,11 @@ void PlayerTwo::handleInput() {
 
 void PlayerTwo::ShootingInput(PlayerTwo p2) {
   // Handles the player's input for shooting
-  if (Keyboard::isKeyPressed(Keyboard::LShift)) {
+  if (Keyboard::isKeyPressed(Keyboard::RShift)) {
     p2.fire();  // fire the bullet
+  }
+    if (sf::Keyboard::isKeyPressed(Keyboard::P)) {
+    p2.reload();  // reloads the ammo
   }
 }
 
@@ -78,6 +81,13 @@ void PlayerTwo::draw(RenderWindow& window) {
     if (ammo[i].isShot()) {
       ammo[i].move();
       ammo[i].draw(&window);  // could be an issue *check*
+
+      // Check if the bullet is off-screen
+      Vector2f bulletPosition = ammo[i].getPosition();
+      if (bulletPosition.x < 0 || bulletPosition.x > window.getSize().x ||
+          bulletPosition.y < 0 || bulletPosition.y > window.getSize().y) {
+        ammo[i].reload();  // Reload the bullet if it's off-screen
+      }
     }
   }
 }
@@ -99,6 +109,14 @@ void PlayerTwo::fire() {
       // Set the position and angle for the bullet
       ammo[i].useShot(bulletPosition, movement.getRotation());
       break;
+    }
+  }
+}
+
+void PlayerTwo::reload() {
+  for (int i = 0; i < ammo_count; i++) {
+    if (ammo[i].isShot()) {
+      ammo[i].reload();
     }
   }
 }
