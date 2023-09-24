@@ -14,10 +14,9 @@ class PlayerOne {
   float barrelLength;
   RectangleShape barrelRect;
   Shooting* ammo;
-  int ammo_count = 1000;
+  int ammo_count = 1;
   Texture tankTexture;
   Texture tankBarrelTexture;
-  Event event;
 
  public:
   PlayerOne();         // default constructor
@@ -25,7 +24,8 @@ class PlayerOne {
   void draw(RenderWindow& window);
   // shooting mechs for player 1
   void fire();
-  void ShootingInput(PlayerOne p1, sf::Event event);
+  void ShootingInput(PlayerOne p1);
+  void reload();
 };
 
 #endif

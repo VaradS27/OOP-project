@@ -1,13 +1,13 @@
 #include "background.h"
 using namespace sf;
 // Background image from :
-// Tank Game Texture supplied by Credit "Kenney.nl" and "www.kenney.nl"
-// https://opengameart.org/content/topdown-tanks
+// https://www.freepik.com/free-photo/green-clay-textured-background-colorful-handmade-creative-art-abstract-style_18141576.htm#page=2&query=low%20poly%20grass%20texture&position=1&from_view=search&track=ais
+// by rawpixel.com on Freepik
 Background::Background() {
   // Set the size of the background
   backgroundRect.setSize(Vector2f(1920.0f, 1080.0f));
   backgroundRect.setPosition(0.0f, 0.0f);
-  if (!backgroundTexture.loadFromFile("grassBackground.png")) {
+  if (!backgroundTexture.loadFromFile("grassBackground.jpg")) {
     // handle error...
   }
   backgroundRect.setTexture(&backgroundTexture);

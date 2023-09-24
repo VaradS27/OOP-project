@@ -31,7 +31,7 @@ int main() {
                            // to handle user input
     player_2.handleInput();
 
-    player.ShootingInput(player, event);
+    player.ShootingInput(player);
     player_2.ShootingInput(player_2);
 
     window.clear();        // Clear the window

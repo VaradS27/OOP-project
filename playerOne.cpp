@@ -31,7 +31,7 @@ PlayerOne::PlayerOne() {
   tankBarrelTexture.setRepeated(true);
   barrelRect.setTexture(&tankBarrelTexture);
 
-  ammo = new Shooting[ammo_count];  // 1000 bullets
+  ammo = new Shooting[ammo_count];  // 1 bullet
 }
 
 void PlayerOne::handleInput() {
@@ -50,15 +50,13 @@ void PlayerOne::handleInput() {
   }
 }
 
-void PlayerOne::ShootingInput(PlayerOne p1, sf::Event event) {
+void PlayerOne::ShootingInput(PlayerOne p1) {
   // Handles the player's input for shooting
-  // if (sf::Keyboard::isKeyPressed(Keyboard::Space)) {
-  //   p1.fire();  // fire the bullet
-  // }
-  if (event.type == sf::Event::KeyReleased) {
-    if (event.key.code == sf::Keyboard::Space) {
-      p1.fire();
-    }
+  if (sf::Keyboard::isKeyPressed(Keyboard::Space)) {
+    p1.fire();  // fire the bullet
+  }
+  if (sf::Keyboard::isKeyPressed(Keyboard::E)) {
+    p1.reload();  // reloads the ammo
   }
 }
 
@@ -83,7 +81,14 @@ void PlayerOne::draw(RenderWindow& window) {
   for (int i = 0; i < ammo_count; ++i) {
     if (ammo[i].isShot()) {
       ammo[i].move();
-      ammo[i].draw(&window);  // could be an issue *check*
+      ammo[i].draw(&window);
+
+      // Check if the bullet is off-screen
+      Vector2f bulletPosition = ammo[i].getPosition();
+      if (bulletPosition.x < 0 || bulletPosition.x > window.getSize().x ||
+          bulletPosition.y < 0 || bulletPosition.y > window.getSize().y) {
+        ammo[i].reload();  // Reload the bullet if it's off-screen
+      }
     }
   }
 }
@@ -105,6 +110,15 @@ void PlayerOne::fire() {
       // Set the position and angle for the bullet
       ammo[i].useShot(bulletPosition, movement.getRotation());
       break;
+    }
+  }
+}
+
+// reload the ammo
+void PlayerOne::reload() {
+  for (int i = 0; i < ammo_count; i++) {
+    if (ammo[i].isShot()) {
+      ammo[i].reload();
     }
   }
 }

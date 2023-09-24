@@ -14,13 +14,14 @@ class PlayerTwo {
   float barrel2Length;
   RectangleShape barrel2Rect;
   Shooting* ammo;
-  int ammo_count = 1000;
+  int ammo_count = 1;
   Texture tankTexture;
   Texture tankBarrelTexture;
  public:
   PlayerTwo();         // default constructor
   void handleInput();  // wasd inputs
   void draw(RenderWindow& window);
+  void reload();
   // shooting mechs for player 1
   void fire();
   void ShootingInput(PlayerTwo p2);
