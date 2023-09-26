@@ -11,11 +11,13 @@ using namespace sf;
 PlayerTwo::PlayerTwo() {
   // Set the size and color of the player's tank (blue rectangle)
   tank2Rect.setSize(Vector2f(50.0f, 50.0f));  // adjust the size as needed
-  tank2Rect.setOrigin(tank2Rect.getSize().x / 2.0f, tank2Rect.getSize().y / 2.0f);
+  tank2Rect.setOrigin(tank2Rect.getSize().x / 2.0f,
+                      tank2Rect.getSize().y / 2.0f);
 
   // Set the size and color of the barrel (black rectangle)
   barrel2Rect.setSize(Vector2f(45.0f, 10.0f));  // adjust the size as needed
-  barrel2Rect.setOrigin(barrel2Rect.getSize().x / 2.0f, barrel2Rect.getSize().y / 2.0f);
+  barrel2Rect.setOrigin(barrel2Rect.getSize().x / 2.0f,
+                        barrel2Rect.getSize().y / 2.0f);
   // Adjust the length of the barrel as needed
   barrel2Length = 20.0f;
 
@@ -55,7 +57,7 @@ void PlayerTwo::ShootingInput(PlayerTwo p2) {
   if (Keyboard::isKeyPressed(Keyboard::RShift)) {
     p2.fire();  // fire the bullet
   }
-    if (sf::Keyboard::isKeyPressed(Keyboard::P)) {
+  if (sf::Keyboard::isKeyPressed(Keyboard::P)) {
     p2.reload();  // reloads the ammo
   }
 }
@@ -101,12 +103,11 @@ void PlayerTwo::fire() {
       Vector2f bulletPosition = barrel2Rect.getPosition();
 
       // Calculate an offset based on the length of the barrel
-      float offset = barrel2Length;
+      float offset = barrel2Length + 5;
       Vector2f bulletOffset(
-          offset * cos(movement.getRotation() * M_PI / 180.f),
-          offset * sin(movement.getRotation() * M_PI / 180.f));
+          offset * cos(movement.getRotation() * M_PI / 180.f) * 1.8,
+          offset * sin(movement.getRotation() * M_PI / 180.f) * 1.8);
       bulletPosition += bulletOffset;
-
       // Set the position and angle for the bullet
       ammo[i].useShot(bulletPosition, movement.getRotation());
       break;
@@ -117,7 +118,37 @@ void PlayerTwo::fire() {
 void PlayerTwo::reload() {
   for (int i = 0; i < ammo_count; i++) {
     if (ammo[i].isShot()) {
-      ammo[i].reload();
+      // Check if the bullet is off-screen
+      Vector2f bulletPosition = ammo[i].getPosition();
+      if (bulletPosition.x < 0 || bulletPosition.x > 1920 ||
+          bulletPosition.y < 0 || bulletPosition.y > 1080) {
+        ammo[i].reload();  // Reload the bullet if it's off-screen
+      }
     }
   }
+}
+
+// collison detection
+void PlayerTwo::health(PlayerTwo p2) {
+  if (p2.isHit()) {
+    p_health--;
+    std::cout << "Player 2 has health : " << p_health << std::endl;
+  }
+}
+
+bool PlayerTwo::isHit() {
+  bool hit = false;
+  int target_x = movement.getX();
+  int target_y = movement.getY();
+
+  Vector2f bulletPosition = ammo[0].getPosition();
+  int x = bulletPosition.x;
+  int y = bulletPosition.y;
+
+  float distance =
+      sqrt((x - target_x) * (x - target_x) + (y - target_y) * (y - target_y));
+  if (distance < (t_depth + b_depth)) {
+    hit = true;
+  }
+  return hit;
 }

@@ -22,12 +22,15 @@ class PlayerTwo {
   int b_depth = 5;
  public:
   PlayerTwo();         // default constructor
-  void handleInput();  // wasd inputs
+  void handleInput();  // arrow key inputs
   void draw(RenderWindow& window);
   void reload();
-  // shooting mechs for player 1
+  // shooting mechs for player 2
   void fire();
   void ShootingInput(PlayerTwo p2);
+  // collision for player 2
+  void health(PlayerTwo p2);
+  bool isHit();
 };
 
 #endif

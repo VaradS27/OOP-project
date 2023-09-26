@@ -9,7 +9,7 @@ Shooting::Shooting() {
   body->setOutlineThickness(5.0f);  // Set outline thickness
   body->setOutlineColor(Color::Black);  // Set outline color to 'BLACK'
   shot = false;
-  bulletSpeed = 5.0f;
+  bulletSpeed = 10.0f;
 }
 
 void Shooting::draw(RenderWindow* win) {
