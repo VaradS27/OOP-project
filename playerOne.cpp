@@ -6,6 +6,7 @@
 #include "cmath"
 #include "math.h"
 #include "movement.h"
+#include "playerTwo.h"
 using namespace sf;
 // Tank Game Texture supplied by Credit "Kenney.nl" and "www.kenney.nl"
 // https://opengameart.org/content/topdown-tanks
@@ -130,26 +131,54 @@ void PlayerOne::reload() {
 }
 
 // collison detection
-void PlayerOne::health(PlayerOne p1) {
-  if (p1.isHit()) {
+void PlayerOne::health(PlayerOne p1, PlayerTwo p2) {
+  if (isHit(p1, p2)) {
     p_health--;
     std::cout << "Player 1 has health : " << p_health << std::endl;
   }
 }
 
-bool PlayerOne::isHit() {
+bool PlayerOne::isHit(PlayerOne& p1,
+                      PlayerTwo& p2) {  // Notice the change in parameter type
   bool hit = false;
   int target_x = movement.getX();
   int target_y = movement.getY();
 
-  Vector2f bulletPosition = ammo[0].getPosition();
-  int x = bulletPosition.x;
-  int y = bulletPosition.y;
+  // Check for collisions with PlayerOne's bullets
+  for (int i = 0; i < ammo_count; i++) {
+    if (p1.getAmmo()[i].isShot()) {
+      Vector2f bulletPosition = p1.getAmmo()[i].getPosition();
+      int x = bulletPosition.x;
+      int y = bulletPosition.y;
 
-  float distance =
-      sqrt((x - target_x) * (x - target_x) + (y - target_y) * (y - target_y));
-  if (distance < (t_depth + b_depth)) {
-    hit = true;
+      float distance = sqrt((x - target_x) * (x - target_x) +
+                            (y - target_y) * (y - target_y));
+      if (distance < (t_depth + b_depth)) {
+        hit = true;
+        p1.getAmmo()[i].reload();  // Make the bullet disappear
+        break;  // No need to check further if a collision is detected
+      }
+    }
+  }
+
+  // If not hit by PlayerOne's bullets, check for collisions with PlayerTwo's
+  // bullets
+  if (!hit) {
+    for (int i = 0; i < ammo_count; i++) {
+      if (p2.getAmmo()[i].isShot()) {
+        Vector2f bulletPosition = p2.getAmmo()[i].getPosition();
+        int x = bulletPosition.x;
+        int y = bulletPosition.y;
+
+        float distance = sqrt((x - target_x) * (x - target_x) +
+                              (y - target_y) * (y - target_y));
+        if (distance < (t_depth + b_depth)) {
+          hit = true;
+          p2.getAmmo()[i].reload();  // Make the bullet disappear
+          break;  // No need to check further if a collision is detected
+        }
+      }
+    }
   }
   return hit;
 }

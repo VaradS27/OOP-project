@@ -37,8 +37,8 @@ int main() {
     window.clear();        // Clear the window
 
     // health display for the players
-    player.health(player);
-    player_2.health(player_2);
+    player.health(player, player_2);
+    player_2.health(player_2, player);
 
     background.draw(window);  // Draw the background onto the window
     player.draw(window);      // Draw the player onto the window

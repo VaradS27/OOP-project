@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "Shooting.h"
+#include "cmath"
 #include "math.h"
 #include "movement.h"
 #include "playerOne.h"
@@ -129,26 +131,53 @@ void PlayerTwo::reload() {
 }
 
 // collison detection
-void PlayerTwo::health(PlayerTwo p2) {
-  if (p2.isHit()) {
+void PlayerTwo::health(PlayerTwo p2, PlayerOne p1) {
+  if (isHit(p2, p1)) {
     p_health--;
     std::cout << "Player 2 has health : " << p_health << std::endl;
   }
 }
 
-bool PlayerTwo::isHit() {
+bool PlayerTwo::isHit(PlayerTwo& p2, PlayerOne& p1) {
   bool hit = false;
   int target_x = movement.getX();
   int target_y = movement.getY();
 
-  Vector2f bulletPosition = ammo[0].getPosition();
-  int x = bulletPosition.x;
-  int y = bulletPosition.y;
+  // Check for collisions with PlayerOne's bullets
+  for (int i = 0; i < ammo_count; i++) {
+    if (p1.getAmmo()[i].isShot()) {
+      Vector2f bulletPosition = p1.getAmmo()[i].getPosition();
+      int x = bulletPosition.x;
+      int y = bulletPosition.y;
 
-  float distance =
-      sqrt((x - target_x) * (x - target_x) + (y - target_y) * (y - target_y));
-  if (distance < (t_depth + b_depth)) {
-    hit = true;
+      float distance = sqrt((x - target_x) * (x - target_x) +
+                            (y - target_y) * (y - target_y));
+      if (distance < (t_depth + b_depth)) {
+        hit = true;
+        p1.getAmmo()[i].reload();  // Make the bullet disappear
+        break;  // No need to check further if a collision is detected
+      }
+    }
+  }
+
+  // If not hit by PlayerOne's bullets, check for collisions with PlayerTwo's
+  // bullets
+  if (!hit) {
+    for (int i = 0; i < ammo_count; i++) {
+      if (p2.getAmmo()[i].isShot()) {
+        Vector2f bulletPosition = p2.getAmmo()[i].getPosition();
+        int x = bulletPosition.x;
+        int y = bulletPosition.y;
+
+        float distance = sqrt((x - target_x) * (x - target_x) +
+                              (y - target_y) * (y - target_y));
+        if (distance < (t_depth + b_depth)) {
+          hit = true;
+          p2.getAmmo()[i].reload();  // Make the bullet disappear
+          break;  // No need to check further if a collision is detected
+        }
+      }
+    }
   }
   return hit;
 }
