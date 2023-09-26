@@ -17,6 +17,9 @@ class PlayerTwo {
   int ammo_count = 1;
   Texture tankTexture;
   Texture tankBarrelTexture;
+  int p_health = 10;
+  int t_depth = 50; 
+  int b_depth = 5;
  public:
   PlayerTwo();         // default constructor
   void handleInput();  // wasd inputs

@@ -35,6 +35,12 @@ int main() {
     player_2.ShootingInput(player_2);
 
     window.clear();        // Clear the window
+
+    // health display for the players
+    player.health(player);
+
+
+
     background.draw(window);  // Draw the background onto the window
     player.draw(window);      // Draw the player onto the window
     player_2.draw(window);    // Draw the player 2 onto the window

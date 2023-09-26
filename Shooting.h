@@ -7,6 +7,7 @@ using namespace sf;
 class Shooting {
  private:
   CircleShape* body;  // Changed from RectangleShape* to CircleShape*
+  //CircleShape* body2;
   bool shot;
   float angle;
   float bulletSpeed;

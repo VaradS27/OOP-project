@@ -4,6 +4,8 @@
 
 #include "math.h"
 #include "movement.h"
+#include "cmath"
+#include "Shooting.h"
 using namespace sf;
 // Tank Game Texture supplied by Credit "Kenney.nl" and "www.kenney.nl"
 // https://opengameart.org/content/topdown-tanks
@@ -121,4 +123,29 @@ void PlayerOne::reload() {
       ammo[i].reload();
     }
   }
+}
+
+// collison detection
+void PlayerOne::health(PlayerOne p1) {
+  if(p1.isHit()){
+       p_health--;
+       std::cout << "Player 1 has health : " << p_health << std::endl;
+
+  }
+}
+bool PlayerOne::isHit(){
+  bool hit = false;
+  int target_x = movement.getX();
+  int target_y = movement.getY();
+
+  Vector2f bulletPosition = ammo[0].getPosition();
+  int x = bulletPosition.x;
+  int y = bulletPosition.y;
+
+  float distance = sqrt((x - target_x)*(x - target_x) + (y - target_y)*(y - target_y));
+  if (distance < (t_depth+b_depth)){
+      hit = true;
+  }
+
+return hit;
 }

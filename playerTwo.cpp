@@ -4,6 +4,7 @@
 
 #include "math.h"
 #include "movement.h"
+#include "playerOne.h"
 using namespace sf;
 // Tank Game Texture supplied by Credit "Kenney.nl" and "www.kenney.nl"
 // https://opengameart.org/content/topdown-tanks
