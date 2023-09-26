@@ -35,7 +35,8 @@ PlayerTwo::PlayerTwo() {
   tankBarrelTexture.setRepeated(true);
   barrel2Rect.setTexture(&tankBarrelTexture);
 
-  ammo = new Shooting[ammo_count];  // 1000 bullets
+  ammo = new Shooting[ammo_count];  // 1 bullets
+  ammo[0].setBulletColor(Color::Red);
 }
 
 void PlayerTwo::handleInput() {
@@ -107,8 +108,8 @@ void PlayerTwo::fire() {
       // Calculate an offset based on the length of the barrel
       float offset = barrel2Length + 5;
       Vector2f bulletOffset(
-          offset * cos(movement.getRotation() * M_PI / 180.f) * 1.8,
-          offset * sin(movement.getRotation() * M_PI / 180.f) * 1.8);
+          offset * cos(movement.getRotation() * M_PI / 180.f),
+          offset * sin(movement.getRotation() * M_PI / 180.f));
       bulletPosition += bulletOffset;
       // Set the position and angle for the bullet
       ammo[i].useShot(bulletPosition, movement.getRotation());
@@ -156,26 +157,6 @@ bool PlayerTwo::isHit(PlayerTwo& p2, PlayerOne& p1) {
         hit = true;
         p1.getAmmo()[i].reload();  // Make the bullet disappear
         break;  // No need to check further if a collision is detected
-      }
-    }
-  }
-
-  // If not hit by PlayerOne's bullets, check for collisions with PlayerTwo's
-  // bullets
-  if (!hit) {
-    for (int i = 0; i < ammo_count; i++) {
-      if (p2.getAmmo()[i].isShot()) {
-        Vector2f bulletPosition = p2.getAmmo()[i].getPosition();
-        int x = bulletPosition.x;
-        int y = bulletPosition.y;
-
-        float distance = sqrt((x - target_x) * (x - target_x) +
-                              (y - target_y) * (y - target_y));
-        if (distance < (t_depth + b_depth)) {
-          hit = true;
-          p2.getAmmo()[i].reload();  // Make the bullet disappear
-          break;  // No need to check further if a collision is detected
-        }
       }
     }
   }

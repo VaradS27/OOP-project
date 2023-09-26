@@ -11,7 +11,6 @@ class Shooting {
   bool shot;
   float angle;
   float bulletSpeed;
-  bool hit;
 
  public:
   Shooting();                    // default constuctor
@@ -20,13 +19,12 @@ class Shooting {
   void set_position(Vector2f position);
   void move();    // speed of the bullet
   bool isShot();  // check if the bullet is fired
-  // bool isHit() { return hit; };
-  void setHit(bool value) { hit = value; };
   // shoting the bullet
   void useShot(Vector2f position, float tankRotation);
   void reload();
   ~Shooting();
   Vector2f getPosition() { return body->getPosition(); }
+  void setBulletColor(const Color& color) { body->setFillColor(color); };
 };
 
 #endif
