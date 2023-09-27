@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <ctime>
 #include <iostream>
 
 #include "background.h"
@@ -34,7 +35,7 @@ int main() {
     player.ShootingInput(player);
     player_2.ShootingInput(player_2);
 
-    window.clear();        // Clear the window
+    window.clear();  // Clear the window
 
     // health display for the players
     player.health(player, player_2);

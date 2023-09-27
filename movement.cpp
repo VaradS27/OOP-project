@@ -1,6 +1,7 @@
 #include "movement.h"
 
 #include <SFML/Graphics.hpp>
+#include <ctime>
 
 #include "math.h"
 using namespace std;
@@ -13,7 +14,21 @@ Movement::Movement()
       minX(0),
       minY(0),
       maxX(1920),
-      maxY(1080) {}
+      maxY(1080) {
+  // Create a random device
+  random_device rd;
+
+  // Initialize a random number generator engine
+  default_random_engine eng(rd());
+
+  // Define the distribution
+  uniform_real_distribution<float> distrX(0.0, 1920.0);
+  uniform_real_distribution<float> distrY(0.0, 1080.0);
+
+  // Generate random x and y coordinates within the boundaries
+  x = distrX(eng);
+  y = distrY(eng);
+}
 // change maxX and maxY if we change the size of the game
 
 void Movement::moveForward() {
