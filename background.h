@@ -12,9 +12,15 @@ class Background {
   Texture backgroundTexture;
   std::vector<Barrel> barrels;
 
+  float* cords_X; // stores the x cords of the mines
+  float* cords_Y; // stores the y cords of the mines
+
  public:
   Background();  // default constructor for background
   void draw(RenderWindow& window);
+
+  float* get_cordsX();
+  float* get_cordsY();
 };
 
 #endif

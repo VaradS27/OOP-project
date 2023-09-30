@@ -133,7 +133,7 @@ void PlayerOne::reload() {
 
 // collison detection
 void PlayerOne::health(PlayerOne p1, PlayerTwo p2) {
-  if (isHit(p1, p2)) {
+  if (isHit(p1, p2) || isHit_mine(p1, p2)) {
     p_health--;
     std::cout << "Player 1 has health : " << p_health << std::endl;
   }
@@ -159,6 +159,30 @@ bool PlayerOne::isHit(PlayerOne& p1, PlayerTwo& p2) {
           p2.getAmmo()[i].reload();  // Make the bullet disappear
           break;  // No need to check further if a collision is detected
         }
+      }
+    }
+  }
+  return hit;
+}
+
+bool PlayerOne::isHit_mine(PlayerOne& p1, PlayerTwo& p2) {
+  bool hit = false;
+  int x = movement.getX();
+  int y = movement.getY();
+  
+  float* cordsX = background.get_cordsX();
+  float* cordsY = background.get_cordsY();
+  // checks
+  for(int k = 0; k < 1; k++){
+    std::cout << cordsX[k] << " " << cordsY[k] << " " << std::endl;
+  }
+
+  if (!hit) {
+    for (int i = 0; i < 7; i++){
+      float crash = sqrt((cordsX[i] - x) * (cordsX[i] - x) + (cordsY[i] + y) * (cordsY[i] + y));
+      if (crash < (t_depth + m_depth)) {
+        hit = true;
+        break;
       }
     }
   }

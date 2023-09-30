@@ -21,7 +21,9 @@ Background::Background() {
   backgroundRect.setTexture(&backgroundTexture);
   backgroundTexture.setRepeated(true);
 
-  for (int i = 0; i < 10; i++) {
+  cords_X = new float[7]; // stores the x cords of the mines
+  cords_Y = new float[7]; // stores the y cords of the mines
+  for (int i = 0; i < 7; i++) {
     // Create a random device
     random_device rd;
 
@@ -34,7 +36,9 @@ Background::Background() {
 
     // Generate random x and y coordinates within the boundaries
     float x = distrX(eng);
+    cords_X[i] = x;
     float y = distrY(eng);
+    cords_Y[i] = y;
 
     barrels.push_back(Barrel(x, y));
   }
@@ -47,4 +51,11 @@ void Background::draw(RenderWindow& window) {
     barrel.draw(window);
     // std::cout << "Position: " << barrel.getPosition().x << std::endl;
   }
+}
+
+float* Background::get_cordsX(){
+return cords_X;
+}
+float* Background::get_cordsY(){
+return cords_Y;
 }

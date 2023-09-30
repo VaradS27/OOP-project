@@ -7,12 +7,14 @@
 #include "Shooting.h"
 #include "barrel.h"
 #include "movement.h"
+#include "background.h"
 class PlayerTwo;  // issue with forward declaration of PlayerTwo class.
 
 using namespace sf;
 
 class PlayerOne {
  private:
+  Background background;
   RectangleShape tankRect;
   Movement movement;
   float barrelLength;
@@ -24,6 +26,7 @@ class PlayerOne {
   int p_health = 10;
   int t_depth = 30;
   int b_depth = 5;
+  int m_depth = 30;
 
  public:
   PlayerOne();         // default constructor
@@ -36,7 +39,9 @@ class PlayerOne {
   // collision for player 1
   void health(PlayerOne p1, PlayerTwo p2);
   bool isHit(PlayerOne& p1, PlayerTwo& p2);
+  bool isHit_mine(PlayerOne& p1, PlayerTwo& p2);
   Shooting* getAmmo() { return ammo; };
+
 };
 
 #endif
