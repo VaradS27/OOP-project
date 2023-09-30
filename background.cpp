@@ -13,7 +13,7 @@ using namespace std;
 // by rawpixel.com on Freepik
 Background::Background() {
   // Set the size of the background
-  backgroundRect.setSize(Vector2f(1920.0f, 1080.0f));
+  backgroundRect.setSize(Vector2f(800.0f, 800.0f));
   backgroundRect.setPosition(0.0f, 0.0f);
   if (!backgroundTexture.loadFromFile("grassBackground.png")) {
     // handle error...
@@ -29,8 +29,8 @@ Background::Background() {
     default_random_engine eng(rd());
 
     // Define the distribution
-    uniform_real_distribution<float> distrX(0.0, 1920.0);
-    uniform_real_distribution<float> distrY(0.0, 1080.0);
+    uniform_real_distribution<float> distrX(0.0, 800.0);
+    uniform_real_distribution<float> distrY(0.0, 800.0);
 
     // Generate random x and y coordinates within the boundaries
     float x = distrX(eng);

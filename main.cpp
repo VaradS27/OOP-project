@@ -10,13 +10,13 @@ using namespace sf;  // Use the sf namespace for SFML classes
 // g++ -Wall main.cpp background.cpp Shooting.cpp movement.cpp playerOne.cpp playerTwo.cpp barrel.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
 int main() {
-  RenderWindow window(VideoMode(1920, 1080), "NoTank You");
+  RenderWindow window(VideoMode(800, 800), "NoTank You");
   Background background;  // Background object
   PlayerOne player;       // This is the playerOne Object
   PlayerTwo player_2;
   Movement movement;
   // Set boundaries to match the game window size
-  movement.setBounds(0, 0, 1920, 1080);
+  movement.setBounds(0, 0, 800, 800);
 
   while (window.isOpen()) {  // while the window is open
     Event event;

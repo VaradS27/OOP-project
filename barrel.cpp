@@ -4,7 +4,7 @@
 Texture Barrel::texture; // Define texture outside the class
 
 Barrel::Barrel(float x, float y) {
-  shape = RectangleShape(Vector2f(62, 44));
+  shape = RectangleShape(Vector2f(30, 25));
 
   // Load the texture from a file only if it hasn't been loaded yet
   if (texture.getSize().x == 0) { // texture not loaded yet
