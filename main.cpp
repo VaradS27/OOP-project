@@ -6,117 +6,87 @@
 #include "menu.h"
 #include "playerOne.h"
 #include "playerTwo.h"
-using namespace sf;  // Use the sf namespace for SFML classes
-
-// g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp
-// playerOne.cpp playerTwo.cpp -lsfml-graphics -lsfml-window -lsfml-system
+using namespace sf;
 
 int main() {
   RenderWindow window(VideoMode(1920, 1080), "No Tank You");
-  RenderWindow window1(VideoMode(1920, 1080), "No Tank You");
-  Background background;  // Background object
-  PlayerOne player;       // This is the playerOne Object
+  Background background;
+  PlayerOne player;
   PlayerTwo player_2;
-  Movement movement;
-  Menu menu(1920, 1080);  // size of the menu
+  Menu menu(1920, 1080);
 
-  // Set boundaries to match the game window size
+  Movement movement;
   movement.setBounds(0, 0, 1920, 1080);
 
-  while (window1.isOpen()) {  // while the window is open
-    Event event1;
-    while (window1.pollEvent(event1)) {  // While there are events to process
-      // If the close event is triggered, close the window
-                  if (event1.type == Event::Closed) {
-              window1.close();
-            }
-      if (event1.type == Event::KeyReleased) {
-        switch (event1.key.code) {
-          case sf::Keyboard::Up:
-            menu.Moveup();
-            break;
+  bool inMenu = true;  // Track if we are in the menu
 
-          case sf::Keyboard::Down:
-            menu.Movedown();
-            break;
+  while (window.isOpen()) {
+    Event event;
+    while (window.pollEvent(event)) {
+      if (event.type == Event::Closed) {
+        window.close();
+      }
 
-          case sf::Keyboard::Return:
-            switch (menu.GetPressedItem()) {
-              case 0:
-                std::cout << "Pressed Play" << std::endl;
-                window1.close();
-                while (window.isOpen()) {  // while the window is open
-                  Event event;
-                  while (window.pollEvent(event)) {
-                    
-                    // While there are events to process
-                    // If the close event is triggered, close the window
-                    if (event1.type == Event::KeyReleased){window.close();}
+      if (inMenu) {
+        if (event.type == Event::KeyReleased) {
+          switch (event.key.code) {
+            case sf::Keyboard::Up:
+              menu.Moveup();
+              break;
 
+            case sf::Keyboard::Down:
+              menu.Movedown();
+              break;
 
+            case sf::Keyboard::Return:
+              switch (menu.GetPressedItem()) {
+                case 0:
+                  std::cout << "Pressed Play" << std::endl;
+                  inMenu = false;  // Exit the menu
+                  break;
 
-                    player.handleInput();  // Call the handleInput method of the
-                                           // player object to handle user input
-                    player_2.handleInput();
+                case 1:
+                  std::cout << "Pressed Rules" << std::endl;
+                  break;
 
-                    player.ShootingInput(player);
-                    player_2.ShootingInput(player_2);
+                case 2:
+                  std::cout << "Pressed About" << std::endl;
+                  break;
 
-                    window.clear();
+                default:
+                  break;
+              }
+              break;
 
-                    player.health(player, player_2);
-                    player_2.health(player_2, player);
-
-                    background.draw(window);          // Draw the background onto the window
-                    player.draw(window);  // Draw the player onto the window
-
-                    player_2.draw(window);  // Draw the player 2 onto the window
-
-                    window.display();
-
-                    break;
-
-                    case 1:
-                      std::cout << "Pressed Rules" << std::endl;
-                      break;
-
-                    case 2:
-                      std::cout << "Pressed About" << std::endl;
-                      break;
-
-                    
-                  }
-                }
-            }
             default:
-            break;
+              break;
+          }
         }
       }
-
-        // Handle player input here and update player position/rotation
-        // player.handleInput();  // Call the handleInput method of the player
-        // object
-        //                        // to handle user input
-        // player_2.handleInput();
-
-        // player.ShootingInput(player);
-        // player_2.ShootingInput(player_2);
-
-        window.clear();  // Clear the window
-        window1.clear();
-        // draw the menu
-        menu.draw(window1);
-
-        // health display for the players
-        //  player.health(player, player_2);
-        //  player_2.health(player_2, player);
-
-        // background.draw(window);  // Draw the background onto the window
-        // player.draw(window);      // Draw the player onto the window
-        // player_2.draw(window);    // Draw the player 2 onto the window
-        window.display();  // Display everything on the window
-        window1.display();
-      }
-      return 0;
     }
+
+    window.clear();
+
+    if (!inMenu) {
+      // Handle game events here
+      player.handleInput();
+      player_2.handleInput();
+
+      player.ShootingInput(player);
+      player_2.ShootingInput(player_2);
+
+      player.health(player, player_2);
+      player_2.health(player_2, player);
+
+      background.draw(window);
+      player.draw(window);
+      player_2.draw(window);
+    } else {
+      menu.draw(window);
+    }
+
+    window.display();
+  }
+
+  return 0;
 }
