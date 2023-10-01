@@ -21,7 +21,7 @@ class PlayerTwo {
   Texture tankTexture;
   Texture tankBarrelTexture;
   int p_health = 10;
-  int t_depth = 50; 
+  int t_depth = 35; 
   int b_depth = 5;
  public:
   PlayerTwo();         // default constructor

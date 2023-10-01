@@ -6,17 +6,20 @@
 #include "menu.h"
 #include "playerOne.h"
 #include "playerTwo.h"
-using namespace sf;
+#include "mine.h"
 
+using namespace sf;
+// g++ -Wall main.cpp background.cpp Shooting.cpp movement.cpp playerOne.cpp playerTwo.cpp menu.cpp barrel.cpp -lsfml-graphics -lsfml-window -lsfml-system
 int main() {
-  RenderWindow window(VideoMode(1920, 1080), "No Tank You");
+  RenderWindow window(VideoMode(1200, 1000), "No Tank You");
   Background background;
   PlayerOne player;
   PlayerTwo player_2;
-  Menu menu(1920, 1080);
+  Menu menu(1200, 1000);
+  Mine mine;
 
   Movement movement;
-  movement.setBounds(0, 0, 1920, 1080);
+  movement.setBounds(0, 0, 1200, 1000);
 
   bool inMenu = true;  // Track if we are in the menu
 
@@ -79,8 +82,12 @@ int main() {
       player_2.health(player_2, player);
 
       background.draw(window);
+      mine.draw(window);
       player.draw(window);
       player_2.draw(window);
+      // check collision with the mine
+      player.collideHealth(player);
+
     } else {
       menu.draw(window);
     }

@@ -89,8 +89,8 @@ void PlayerOne::draw(RenderWindow& window) {
 
       // Check if the bullet is off-screen
       Vector2f bulletPosition = ammo[i].getPosition();
-      if (bulletPosition.x < 0 || bulletPosition.x > 1920 ||
-          bulletPosition.y < 0 || bulletPosition.y > 1080) {
+      if (bulletPosition.x < 0 || bulletPosition.x > 1200 ||
+          bulletPosition.y < 0 || bulletPosition.y > 1000) {
         ammo[i].reload();  // Reload the bullet if it's off-screen
       }
     }
@@ -123,8 +123,8 @@ void PlayerOne::reload() {
     if (ammo[i].isShot()) {
       // Check if the bullet is off-screen
       Vector2f bulletPosition = ammo[i].getPosition();
-      if (bulletPosition.x < 0 || bulletPosition.x > 1920 ||
-          bulletPosition.y < 0 || bulletPosition.y > 1080) {
+      if (bulletPosition.x < 0 || bulletPosition.x > 1200 ||
+          bulletPosition.y < 0 || bulletPosition.y > 1000) {
         ammo[i].reload();  // Reload the bullet if it's off-screen
       }
     }
@@ -163,4 +163,42 @@ bool PlayerOne::isHit(PlayerOne& p1, PlayerTwo& p2) {
     }
   }
   return hit;
+}
+float PlayerOne::clamp(float value, float minn, float maxx){
+    if(value < minn){
+        return minn;
+    } else if(value > maxx){
+        return maxx;
+    } else {
+        return value;
+    }
+}
+
+int PlayerOne::collision(PlayerOne &R1){
+    // find the closest point of the circle to rectangle
+    float closestX = clamp(600, movement.getX(), movement.getX()-50);
+    float closestY = clamp(500, movement.getY(), movement.getY()-20);
+
+    // get the distance between the two points
+    float distanceX = 600 - closestX;
+    float distanceY = 500 - closestY;
+
+    // checking the conditions are met and collision occurs, return 1
+    float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+    if(distanceSquared < 400 && closestX != 600 && closestY != 500){
+        return 3;
+    }else if(distanceSquared < 400 && closestX == 600){
+        return 2;
+    }else if(distanceSquared < 400 && closestY == 500){
+        return 1;
+    }else{
+    return 0; // no collision hence return 0
+    }
+}
+
+void PlayerOne::collideHealth(PlayerOne &R1){
+  if(R1.collision(R1) == 3 || R1.collision(R1) == 2 || R1.collision(R1) == 1){
+    p_health--;
+    std::cout << "player 1 lost health, remaining health : " << p_health << std::endl; 
+  }
 }

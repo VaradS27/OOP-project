@@ -21,7 +21,7 @@ class PlayerOne {
   Texture tankTexture;
   Texture tankBarrelTexture;
   int p_health = 10;
-  int t_depth = 50;
+  int t_depth = 35;
   int b_depth = 5;
 
  public:
@@ -36,6 +36,9 @@ class PlayerOne {
   void health(PlayerOne p1, PlayerTwo p2);
   bool isHit(PlayerOne& p1, PlayerTwo& p2);
   Shooting* getAmmo() { return ammo; };
+  float clamp(float value, float minn, float maxx);
+  int collision(PlayerOne &R1);
+  void collideHealth(PlayerOne &R1);
 };
 
 #endif
