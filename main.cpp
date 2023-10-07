@@ -3,14 +3,23 @@
 #include <iostream>
 
 #include "background.h"
+#include "endScreen.h"
 #include "menu.h"
+#include "mine.h"
 #include "playerOne.h"
 #include "playerTwo.h"
-#include "mine.h"
 
 using namespace sf;
-// g++ -Wall main.cpp background.cpp Shooting.cpp movement.cpp playerOne.cpp playerTwo.cpp menu.cpp barrel.cpp -lsfml-graphics -lsfml-window -lsfml-system
+
+// Create function that resets the game, and creates it again.
+
+// g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp
+// playerOne.cpp playerTwo.cpp mine.cpp endScreen.cpp -lsfml-graphics
+// -lsfml-window -lsfml-system
+
 int main() {
+  // Create an instance of EndScreen
+  EndScreen endScreen(1200, 1000);
   RenderWindow window(VideoMode(1200, 1000), "No Tank You");
   Background background;
   PlayerOne player;
@@ -21,7 +30,8 @@ int main() {
   Movement movement;
   movement.setBounds(0, 0, 1200, 1000);
 
-  bool inMenu = true;  // Track if we are in the menu
+  bool inMenu = true;        // Track if we are in the menu
+  bool inEndScreen = false;  // Track if we are in the end screen
 
   while (window.isOpen()) {
     Event event;
@@ -66,33 +76,89 @@ int main() {
           }
         }
       }
+
+      if (!inMenu && !inEndScreen) {
+        // Handle game events here
+        player.handleInput();
+        player_2.handleInput();
+
+        player.ShootingInput(player);
+        player_2.ShootingInput(player_2);
+
+        player.health(player, player_2);
+        player_2.health(player_2, player);
+
+        background.draw(window);
+        mine.draw(window);
+        player.draw(window);
+        player_2.draw(window);
+        // Check collision with the mine
+        player.collideHealth(player);
+
+        if (player.getHealth() <= 0 || player_2.getHealth() <= 0) {
+          inEndScreen = true;
+        }
+      }
+
+      window.clear();
+
+      if (!inMenu) {
+        if (!inEndScreen) {
+          // Clear the window
+          window.clear();
+
+          // Draw the background
+          background.draw(window);
+
+          // Draw game objects
+          mine.draw(window);
+          player.draw(window);
+          player_2.draw(window);
+        } else {
+          // Handle end screen events here
+          if (event.type == Event::KeyReleased) {
+            switch (event.key.code) {
+              case sf::Keyboard::Up:
+                endScreen.Moveup();
+                break;
+
+              case sf::Keyboard::Down:
+                endScreen.Movedown();
+                break;
+
+              case sf::Keyboard::Return:
+                switch (endScreen.GetPressedItem()) {
+                  case 0:
+                    std::cout << "Pressed Try Again" << std::endl;
+                    // Reset the game state here
+                    player.reset();
+                    player_2.reset();
+                    inEndScreen = false;
+                    break;
+
+                  case 1:
+                    std::cout << "Pressed Exit" << std::endl;
+                    window.close();
+                    break;
+
+                  default:
+                    break;
+                }
+                break;
+
+              default:
+                break;
+            }
+          }
+
+          endScreen.draw(window);
+        }
+      } else {
+        menu.draw(window);
+      }
+
+      window.display();
     }
-
-    window.clear();
-
-    if (!inMenu) {
-      // Handle game events here
-      player.handleInput();
-      player_2.handleInput();
-
-      player.ShootingInput(player);
-      player_2.ShootingInput(player_2);
-
-      player.health(player, player_2);
-      player_2.health(player_2, player);
-
-      background.draw(window);
-      mine.draw(window);
-      player.draw(window);
-      player_2.draw(window);
-      // check collision with the mine
-      player.collideHealth(player);
-
-    } else {
-      menu.draw(window);
-    }
-
-    window.display();
   }
 
   return 0;

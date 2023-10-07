@@ -6,7 +6,7 @@
 #include "Shooting.h"
 #include "movement.h"
 
-class PlayerTwo; // issue with forward declaration of PlayerTwo class.
+class PlayerTwo;  // issue with forward declaration of PlayerTwo class.
 
 using namespace sf;
 
@@ -37,8 +37,17 @@ class PlayerOne {
   bool isHit(PlayerOne& p1, PlayerTwo& p2);
   Shooting* getAmmo() { return ammo; };
   float clamp(float value, float minn, float maxx);
-  int collision(PlayerOne &R1);
-  void collideHealth(PlayerOne &R1);
+  int collision(PlayerOne& R1);
+  void collideHealth(PlayerOne& R1);
+  // Add a getHealth function
+  int getHealth() { return p_health; };
+
+  // Add a reset function
+  void reset() {
+    p_health = 10;   // Reset health to initial value
+    ammo_count = 1;  // Reset ammo count to initial value
+    // Add any other necessary reset operations here...
+  };
 };
 
 #endif

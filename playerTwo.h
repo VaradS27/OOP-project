@@ -6,7 +6,7 @@
 #include "Shooting.h"
 #include "movement.h"
 
-class PlayerOne; // issue with forward declaration of PlayerOne class.
+class PlayerOne;  // issue with forward declaration of PlayerOne class.
 
 using namespace sf;
 
@@ -21,8 +21,9 @@ class PlayerTwo {
   Texture tankTexture;
   Texture tankBarrelTexture;
   int p_health = 10;
-  int t_depth = 35; 
+  int t_depth = 35;
   int b_depth = 5;
+
  public:
   PlayerTwo();         // default constructor
   void handleInput();  // arrow key inputs
@@ -35,6 +36,12 @@ class PlayerTwo {
   void health(PlayerTwo p2, PlayerOne p1);
   bool isHit(PlayerTwo& p2, PlayerOne& p1);
   Shooting* getAmmo() { return ammo; };
+  int getHealth() { return p_health; };
+  void reset() {
+    p_health = 10;   // Reset health to initial value
+    ammo_count = 1;  // Reset ammo count to initial value
+    // Add any other necessary reset operations here...
+  }
 };
 
 #endif
