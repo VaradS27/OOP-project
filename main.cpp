@@ -11,63 +11,75 @@
 
 using namespace sf;
 
-// Create function that resets the game, and creates it again.
-
-// g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp
-// playerOne.cpp playerTwo.cpp mine.cpp endScreen.cpp -lsfml-graphics
-// -lsfml-window -lsfml-system
+// g++ -Wall main.cpp background.cpp Shooting.cpp movement.cpp playerOne.cpp
+// playerTwo.cpp menu.cpp barrel.cpp -lsfml-graphics -lsfml-game -lsfml-system
 
 int main() {
-  // Create an instance of EndScreen
-  EndScreen endScreen(1200, 1000);
-  RenderWindow window(VideoMode(1200, 1000), "No Tank You");
+  RenderWindow game(VideoMode(1200, 1000), "No Tank You");
   Background background;
   PlayerOne player;
   PlayerTwo player_2;
   Menu menu(1200, 1000);
   Mine mine;
+  EndScreen endScreen(1200, 1000);
 
   Movement movement;
   movement.setBounds(0, 0, 1200, 1000);
 
-  bool inMenu = true;        // Track if we are in the menu
-  bool inEndScreen = false;  // Track if we are in the end screen
+  bool inMenu = true;     // Track if we are in the menu
+  bool gameOver = false;  // Track if the game is over
 
-  while (window.isOpen()) {
+  while (game.isOpen()) {
     Event event;
-    while (window.pollEvent(event)) {
+    while (game.pollEvent(event)) {
       if (event.type == Event::Closed) {
-        window.close();
+        game.close();
+      }
+
+      if (!gameOver && !inMenu) {
+        // Check for player health reaching 0
+        if (player.getHealth() <= 0 || player_2.getHealth() <= 0) {
+          gameOver = true;
+          inMenu = true;  // Return to the menu when the game is over
+          // Add any additional actions you want when the game is over
+        }
       }
 
       if (inMenu) {
         if (event.type == Event::KeyReleased) {
           switch (event.key.code) {
             case sf::Keyboard::Up:
-              menu.Moveup();
+              menu.Moveup();  // Move selection up
               break;
 
             case sf::Keyboard::Down:
-              menu.Movedown();
+              menu.Movedown();  // Move selection down
               break;
 
             case sf::Keyboard::Return:
-              switch (menu.GetPressedItem()) {
-                case 0:
-                  std::cout << "Pressed Play" << std::endl;
-                  inMenu = false;  // Exit the menu
-                  break;
+              if (gameOver) {
+                // If the game is over and Enter is pressed, exit the game
+                game.close();
+              } else {
+                switch (menu.GetPressedItem()) {
+                  case 0:
+                    std::cout << "Pressed Play" << std::endl;
+                    inMenu = false;  // Exit the menu
+                    break;
 
-                case 1:
-                  std::cout << "Pressed Rules" << std::endl;
-                  break;
+                  case 1:
+                    std::cout << "Pressed Rules" << std::endl;
+                    // Add logic for displaying rules
+                    break;
 
-                case 2:
-                  std::cout << "Pressed About" << std::endl;
-                  break;
+                  case 2:
+                    std::cout << "Pressed About" << std::endl;
+                    // Add logic for displaying information about the game
+                    break;
 
-                default:
-                  break;
+                  default:
+                    break;
+                }
               }
               break;
 
@@ -75,90 +87,43 @@ int main() {
               break;
           }
         }
+
+        // Draw the menu on the game window
+        menu.draw(game);
       }
-
-      if (!inMenu && !inEndScreen) {
-        // Handle game events here
-        player.handleInput();
-        player_2.handleInput();
-
-        player.ShootingInput(player);
-        player_2.ShootingInput(player_2);
-
-        player.health(player, player_2);
-        player_2.health(player_2, player);
-
-        background.draw(window);
-        mine.draw(window);
-        player.draw(window);
-        player_2.draw(window);
-        // Check collision with the mine
-        player.collideHealth(player);
-
-        if (player.getHealth() <= 0 || player_2.getHealth() <= 0) {
-          inEndScreen = true;
-        }
-      }
-
-      window.clear();
-
-      if (!inMenu) {
-        if (!inEndScreen) {
-          // Clear the window
-          window.clear();
-
-          // Draw the background
-          background.draw(window);
-
-          // Draw game objects
-          mine.draw(window);
-          player.draw(window);
-          player_2.draw(window);
-        } else {
-          // Handle end screen events here
-          if (event.type == Event::KeyReleased) {
-            switch (event.key.code) {
-              case sf::Keyboard::Up:
-                endScreen.Moveup();
-                break;
-
-              case sf::Keyboard::Down:
-                endScreen.Movedown();
-                break;
-
-              case sf::Keyboard::Return:
-                switch (endScreen.GetPressedItem()) {
-                  case 0:
-                    std::cout << "Pressed Try Again" << std::endl;
-                    // Reset the game state here
-                    player.reset();
-                    player_2.reset();
-                    inEndScreen = false;
-                    break;
-
-                  case 1:
-                    std::cout << "Pressed Exit" << std::endl;
-                    window.close();
-                    break;
-
-                  default:
-                    break;
-                }
-                break;
-
-              default:
-                break;
-            }
-          }
-
-          endScreen.draw(window);
-        }
-      } else {
-        menu.draw(window);
-      }
-
-      window.display();
     }
+
+    game.clear();
+
+    if (!inMenu) {
+      // Handle game events here
+      player.handleInput();
+      player_2.handleInput();
+
+      player.ShootingInput(player);
+      player_2.ShootingInput(player_2);
+
+      player.health(player, player_2);
+      player_2.health(player_2, player);
+
+      background.draw(game);
+      mine.draw(game);
+      player.draw(game);
+      player_2.draw(game);
+      // check collision with the mine
+      player.collideHealth(player);
+      // player_2.collideHealth(player_2);
+    } else {
+      if (gameOver) {
+        // Display the end screen
+        endScreen.draw(game);
+      } else {
+        // Draw the menu only if the game is not over
+        menu.draw(game);
+      }
+    }
+
+    game.display();
   }
 
   return 0;
