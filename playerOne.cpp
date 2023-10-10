@@ -202,5 +202,9 @@ void PlayerOne::collideHealth(PlayerOne& R1) {
   }
 }
 
-PlayerOne::~PlayerOne(){
-}
+// PlayerOne::~PlayerOne() {
+//   if (ammo) {
+//     delete[] ammo;
+//     ammo = nullptr;
+//   }
+// }

@@ -21,8 +21,8 @@ class PlayerTwo : public Tank {
   Texture tankBarrelTexture;
 
  public:
-  PlayerTwo();         // Default constructor
-  ~PlayerTwo();
+  PlayerTwo();  // Default constructor
+  // ~PlayerTwo();
   void handleInput();  // Arrow key inputs
   void draw(RenderWindow& window);
   void reload();
@@ -39,6 +39,10 @@ class PlayerTwo : public Tank {
   int getHealth() {
     return this->p_health;  // Inherited from Tank
   }
+
+  // For Unit Tests:
+  RectangleShape get_tankRect() { return tankRect; };
+  RectangleShape get_barrelRect() { return barrelRect; };
 };
 
 #endif

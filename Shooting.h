@@ -25,6 +25,7 @@ class Shooting {
   ~Shooting();
   Vector2f getPosition() { return body->getPosition(); }
   void setBulletColor(const Color& color) { body->setFillColor(color); };
+  CircleShape* getBody() { return body; };
 };
 
 #endif

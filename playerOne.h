@@ -21,8 +21,8 @@ class PlayerOne : public Tank {
   Texture tankBarrelTexture;
 
  public:
-  PlayerOne();         // default constructor
-  ~PlayerOne();
+  PlayerOne();  // default constructor
+  // ~PlayerOne();
   void handleInput();  // wasd inputs
   void draw(RenderWindow& window);
   // shooting mechs for player 1
@@ -39,6 +39,9 @@ class PlayerOne : public Tank {
   int getHealth() {
     return this->p_health;  // Inherited from Tank
   }
+  // For Unit Tests:
+  RectangleShape get_tankRect() { return tankRect; };
+  RectangleShape get_barrelRect() { return barrelRect; };
 };
 
 #endif
