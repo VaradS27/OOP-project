@@ -2,6 +2,7 @@
 #define ENDSCREEN_H
 
 #include <SFML/Graphics.hpp>
+using namespace sf;
 
 class EndScreen {
  public:
@@ -15,6 +16,8 @@ class EndScreen {
   sf::Font font;
   sf::Text endText;
   sf::Text exitButton;  // Only one button needed
+  RectangleShape endBackground;
+  Texture endBack;
 };
 
 #endif

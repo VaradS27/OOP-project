@@ -22,6 +22,7 @@ class PlayerTwo : public Tank {
 
  public:
   PlayerTwo();         // Default constructor
+  ~PlayerTwo();
   void handleInput();  // Arrow key inputs
   void draw(RenderWindow& window);
   void reload();

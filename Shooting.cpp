@@ -36,4 +36,5 @@ void Shooting::useShot(Vector2f position, float tankRotation) {
   angle = tankRotation;
 }
 
-Shooting::~Shooting() {}
+Shooting::~Shooting() {
+}

@@ -87,7 +87,7 @@ void PlayerTwo::draw(RenderWindow& window) {
 
       // Check if the bullet is off-screen
       Vector2f bulletPosition = ammo[i].getPosition();
-      if (bulletPosition.x < 0 || bulletPosition.x > 1200 ||
+      if (bulletPosition.x < 0 || bulletPosition.x > 900 ||
           bulletPosition.y < 0 || bulletPosition.y > 1000) {
         ammo[i].reload();  // Reload the bullet if it's off-screen
       }
@@ -120,7 +120,7 @@ void PlayerTwo::reload() {
     if (ammo[i].isShot()) {
       // Check if the bullet is off-screen
       Vector2f bulletPosition = ammo[i].getPosition();
-      if (bulletPosition.x < 0 || bulletPosition.x > 1200 ||
+      if (bulletPosition.x < 0 || bulletPosition.x > 900 ||
           bulletPosition.y < 0 || bulletPosition.y > 1000) {
         ammo[i].reload();  // Reload the bullet if it's off-screen
       }
@@ -198,4 +198,7 @@ void PlayerTwo::collideHealth(PlayerTwo& R1) {
     std::cout << "Red Tank lost health, remaining health : " << p_health
               << std::endl;
   }
+}
+
+PlayerTwo::~PlayerTwo(){
 }

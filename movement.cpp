@@ -13,7 +13,7 @@ Movement::Movement()
       speed(5.0f),
       minX(0),
       minY(0),
-      maxX(1200),
+      maxX(900),
       maxY(1000) {
   // Create a random device
   random_device rd;
@@ -22,7 +22,7 @@ Movement::Movement()
   default_random_engine eng(rd());
 
   // Define the distribution
-  uniform_real_distribution<float> distrX(0.0, 1200.0);
+  uniform_real_distribution<float> distrX(0.0, 900.0);
   uniform_real_distribution<float> distrY(0.0, 1000.0);
 
   // Generate random x and y coordinates within the boundaries

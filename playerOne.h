@@ -22,6 +22,7 @@ class PlayerOne : public Tank {
 
  public:
   PlayerOne();         // default constructor
+  ~PlayerOne();
   void handleInput();  // wasd inputs
   void draw(RenderWindow& window);
   // shooting mechs for player 1

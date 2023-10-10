@@ -11,21 +11,19 @@
 
 using namespace sf;
 
-// g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp
-// playerOne.cpp playerTwo.cpp Tank.cpp mine.cpp endScreen.cpp -lsfml-graphics
-// -lsfml-window -lsfml-system
+// g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp playerOne.cpp playerTwo.cpp Tank.cpp mine.cpp endScreen.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
 int main() {
-  RenderWindow game(VideoMode(1200, 1000), "No Tank You");
+  RenderWindow game(VideoMode(900, 1000), "No Tank You");
   Background background;
   PlayerOne player;
   PlayerTwo player_2;
-  Menu menu(1200, 1000);
+  Menu menu(900, 1000);
   Mine mine;
-  EndScreen endScreen(1200, 1000);
+  EndScreen endScreen(900, 1000);
 
   Movement movement;
-  movement.setBounds(0, 0, 1200, 1000);
+  movement.setBounds(0, 0, 900, 1000);
 
   bool inMenu = true;     // Track if we are in the menu
   bool gameOver = false;  // Track if the game is over
@@ -43,6 +41,8 @@ int main() {
           gameOver = true;
           inMenu = true;  // Return to the menu when the game is over
           // Add any additional actions you want when the game is over
+          std::cout << "---------Game Over-----------" << std::endl;
+          std::cout << "---------Thanks for playing---------" << std::endl;
         }
       }
 
@@ -64,18 +64,23 @@ int main() {
               } else {
                 switch (menu.GetPressedItem()) {
                   case 0:
-                    std::cout << "Pressed Play" << std::endl;
+                    std::cout << "---------Pressed Play----------" << std::endl;
                     inMenu = false;  // Exit the menu
                     break;
 
                   case 1:
-                    std::cout << "Pressed Rules" << std::endl;
-                    // Add logic for displaying rules
+                    std::cout << "---------Pressed Rules---------" << std::endl;
+                    // logic for displaying rules
+                    std::cout << "The objective of the game is to destroy the enemy tank whilst dodging the enemy bullets." << std::endl;
+                    std::cout << "Each tank has 10 health with the bullets dealing 1 damage point." << std::endl;
+                    std::cout << "| Player 1's controls :- 'W','A','S','D','SPACE' |" << std::endl;
+                    std::cout << "| Player 2's controls :- 'Up-Arrow','Left-Arrow','Down-Arrow','Right-Arrow','Left-Shift' |" << std::endl;
                     break;
 
                   case 2:
-                    std::cout << "Pressed About" << std::endl;
-                    // Add logic for displaying information about the game
+                    std::cout << "---------Pressed Exit---------" << std::endl;
+                    std::cout << "---------Thanks for playing---------" << std::endl;
+                    game.close();
                     break;
 
                   default:
@@ -108,7 +113,7 @@ int main() {
       player_2.health(player_2, player);
 
       background.draw(game);
-      mine.draw(game);
+      //mine.draw(game);
       player.draw(game);
       player_2.draw(game);
       // check collision with the mine
