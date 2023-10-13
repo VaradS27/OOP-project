@@ -160,49 +160,49 @@ bool PlayerTwo::isHit(PlayerTwo& p2, PlayerOne& p1) {
   return hit;
 }
 
-float PlayerTwo::clamp(float value, float minn, float maxx) {
-  if (value < minn) {
-    return minn;
-  } else if (value > maxx) {
-    return maxx;
-  } else {
-    return value;
-  }
-}
+// float PlayerTwo::clamp(float value, float minn, float maxx) {
+//   if (value < minn) {
+//     return minn;
+//   } else if (value > maxx) {
+//     return maxx;
+//   } else {
+//     return value;
+//   }
+// }
 
-int PlayerTwo::collision(PlayerTwo& R1) {
-  // find the closest point of the circle to rectangle
-  float closestX = clamp(600, getX(), getX() - 50);
-  float closestY = clamp(500, getY(), getY() - 20);
+// int PlayerTwo::collision(PlayerTwo& R1) {
+//   // find the closest point of the circle to rectangle
+//   float closestX = clamp(600, getX(), getX() - 50);
+//   float closestY = clamp(500, getY(), getY() - 20);
 
-  // get the distance between the two points
-  float distanceX = 600 - closestX;
-  float distanceY = 500 - closestY;
+//   // get the distance between the two points
+//   float distanceX = 600 - closestX;
+//   float distanceY = 500 - closestY;
 
-  // checking the conditions are met and collision occurs, return 1
-  float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-  if (distanceSquared < 400 && closestX != 600 && closestY != 500) {
-    return 3;
-  } else if (distanceSquared < 400 && closestX == 600) {
-    return 2;
-  } else if (distanceSquared < 400 && closestY == 500) {
-    return 1;
-  } else {
-    return 0;  // no collision hence return 0
-  }
-}
+//   // checking the conditions are met and collision occurs, return 1
+//   float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+//   if (distanceSquared < 400 && closestX != 600 && closestY != 500) {
+//     return 3;
+//   } else if (distanceSquared < 400 && closestX == 600) {
+//     return 2;
+//   } else if (distanceSquared < 400 && closestY == 500) {
+//     return 1;
+//   } else {
+//     return 0;  // no collision hence return 0
+//   }
+// }
 
-void PlayerTwo::collideHealth(PlayerTwo& R1) {
-  if (collision(R1) == 3 || collision(R1) == 2 || collision(R1) == 1) {
-    p_health--;
-    std::cout << "Red Tank lost health, remaining health : " << p_health
-              << std::endl;
-  }
-}
+// void PlayerTwo::collideHealth(PlayerTwo& R1) {
+//   if (collision(R1) == 3 || collision(R1) == 2 || collision(R1) == 1) {
+//     p_health--;
+//     std::cout << "Red Tank lost health, remaining health : " << p_health
+//               << std::endl;
+//   }
+// }
 
 // PlayerTwo::~PlayerTwo() {
 //   if (ammo) {
 //     delete[] ammo;
-//     ammo = nullptr;
+//     // ammo = nullptr;
 //   }
 // }

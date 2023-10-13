@@ -5,7 +5,7 @@
 #include "background.h"
 #include "endScreen.h"
 #include "menu.h"
-#include "mine.h"
+// #include "mine.h"
 #include "playerOne.h"
 #include "playerTwo.h"
 
@@ -19,7 +19,7 @@ int main() {
   PlayerOne player;
   PlayerTwo player_2;
   Menu menu(900, 1000);
-  Mine mine;
+  // Mine mine;
   EndScreen endScreen(900, 1000);
 
   Movement movement;
@@ -35,7 +35,7 @@ int main() {
         game.close();
       }
 
-      if (!gameOver && !inMenu) {
+      if (!gameOver || !inMenu) {
         // Check for player health reaching 0
         if (player.getHealth() <= 0 || player_2.getHealth() <= 0) {
           gameOver = true;
@@ -117,7 +117,7 @@ int main() {
       player.draw(game);
       player_2.draw(game);
       // check collision with the mine
-      player.collideHealth(player);
+      // player.collideHealth(player);
       // player_2.collideHealth(player_2);
     } else {
       if (gameOver) {

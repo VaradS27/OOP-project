@@ -33,9 +33,6 @@ class PlayerTwo : public Tank {
   void health(PlayerTwo p2, PlayerOne p1);
   bool isHit(PlayerTwo& p2, PlayerOne& p1);
   Shooting* getAmmo() { return ammo; };
-  float clamp(float value, float minn, float maxx);
-  int collision(PlayerTwo& R1);
-  void collideHealth(PlayerTwo& R1);
   int getHealth() {
     return this->p_health;  // Inherited from Tank
   }

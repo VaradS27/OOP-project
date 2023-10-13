@@ -5,6 +5,7 @@
 class Movement {
  public:
   Movement();  // default constructor
+  virtual ~Movement() {};
   void moveForward();
   void moveBackward();
   void rotateLeft();
