@@ -16,7 +16,7 @@ void save_game(PlayerOne playerOne, PlayerTwo playerTwo) {
   }
 }
 
-void load_game(PlayerOne &playerOne, PlayerTwo &playerTwo) {
+void load_game(PlayerOne& playerOne, PlayerTwo& playerTwo) {
   std::ifstream file("game_data.txt");
 
   if (file.is_open()) {
@@ -26,16 +26,20 @@ void load_game(PlayerOne &playerOne, PlayerTwo &playerTwo) {
     file >> health;
     playerOne.set_playerHealth(health);
     file >> positionX >> positionY;
-    playerOne.get_tankRect().setPosition(positionX, positionY);
+    // set_playerPosition function to update tank's position
+    playerOne.set_playerPosition(positionX, positionY);
     file >> rotation;
-    playerOne.get_barrelRect().setRotation(rotation);
+    // set_playerRotation function to update the barrel's rotation
+    playerOne.set_playerRotation(rotation);
 
     file >> health;
     playerTwo.set_playerHealth(health);
     file >> positionX >> positionY;
-    playerTwo.get_tankRect().setPosition(positionX, positionY);
+    // set_playerPosition function to update tank's position
+    playerTwo.set_playerPosition(positionX, positionY);
     file >> rotation;
-    playerTwo.get_barrelRect().setRotation(rotation);
+    // set_playerRotation function to update the barrel's rotation
+    playerTwo.set_playerRotation(rotation);
 
     file.close();
   }

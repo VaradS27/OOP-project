@@ -99,6 +99,12 @@ int main() {
                                  "'Up-Arrow','Left-Arrow','Down-Arrow','Right-"
                                  "Arrow','Left-Shift' |"
                               << std::endl;
+                    std::cout << std::endl;
+                    std::cout << "| TO SAVE THE GAME PRESS (LEFT) CTRL + S |"
+                              << std::endl;
+                    std::cout << "| TO LOAD THE GAME PRESS (LEFT) CTRL + L |"
+                              << std::endl;
+
                     break;
 
                   case 2:

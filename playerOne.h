@@ -35,7 +35,7 @@ class PlayerOne : public Tank {
   Shooting* getAmmo() { return ammo; };
   int getHealth() {
     return this->p_health;  // Inherited from Tank
-  }
+  };
   // For Unit Tests:
   RectangleShape& get_tankRect() { return tankRect; };
   RectangleShape& get_barrelRect() { return barrelRect; };
