@@ -3,7 +3,8 @@
 
 #include "Shooting.h"
 
-// Test Case was created using this website: https://cunit.sourceforge.net/doc/writing_tests.html
+// Test Cases were inspired by this website:
+// https://cunit.sourceforge.net/doc/writing_tests.html
 
 int main() {
   // RenderWindow

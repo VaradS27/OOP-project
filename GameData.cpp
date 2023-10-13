@@ -1,8 +1,10 @@
 #include "GameData.h"
 
 void save_game(PlayerOne playerOne, PlayerTwo playerTwo) {
+  // Output: text file of the following values with name "game_data.txt"
   std::ofstream file("game_data.txt");
-
+  // Variables that will be stored for both players: health, position and
+  // rotation
   if (file.is_open()) {
     file << playerOne.getHealth() << "\n";
     file << playerOne.get_tankRect().getPosition().x << "\n";
@@ -17,9 +19,12 @@ void save_game(PlayerOne playerOne, PlayerTwo playerTwo) {
 }
 
 void load_game(PlayerOne& playerOne, PlayerTwo& playerTwo) {
+  // Open the following file to input the variable such as health, position and
+  // rotation for each player
   std::ifstream file("game_data.txt");
 
   if (file.is_open()) {
+    // Initialisation of store varibles
     int health;
     float positionX, positionY, rotation;
 

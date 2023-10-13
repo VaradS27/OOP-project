@@ -12,23 +12,25 @@ using namespace sf;
 
 class PlayerOne : public Tank {
  private:
-  RectangleShape tankRect;
-  float barrelLength;
-  RectangleShape barrelRect;
+  RectangleShape tankRect;    // tank rectangular shape
+  float barrelLength;         // barrel length
+  RectangleShape barrelRect;  // tank barrel rectangular shape
   Shooting* ammo;
-  int ammo_count = 1;
-  Texture tankTexture;
-  Texture tankBarrelTexture;
+  int ammo_count = 1;         // tank can only shoot one time each time
+  Texture tankTexture;        // tank texture
+  Texture tankBarrelTexture;  // barrel texture
 
  public:
   PlayerOne();  // default constructor
-  // ~PlayerOne();
-  void handleInput();  // wasd inputs
-  void draw(RenderWindow& window);
-  // shooting mechs for player 1
+  // ~PlayerOne();  // destructor
+  void handleInput();               // wasd inputs
+  void draw(RenderWindow& window);  // draw playerOne on the game window
+
+  // shooting mechanics for player 1
   void fire();
   void ShootingInput(PlayerOne p1);
   void reload();
+
   // collision for player 1
   void health(PlayerOne p1, PlayerTwo p2);
   bool isHit(PlayerOne& p1, PlayerTwo& p2);
@@ -36,6 +38,7 @@ class PlayerOne : public Tank {
   int getHealth() {
     return this->p_health;  // Inherited from Tank
   };
+
   // For Unit Tests:
   RectangleShape& get_tankRect() { return tankRect; };
   RectangleShape& get_barrelRect() { return barrelRect; };

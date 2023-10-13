@@ -11,78 +11,93 @@
 
 using namespace sf;
 
+// Compiler Command:
 // g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp
 // playerOne.cpp playerTwo.cpp GameData.cpp Tank.cpp mine.cpp endScreen.cpp
 // -lsfml-graphics -lsfml-window -lsfml-system
 
 int main() {
+  // Create game window
   RenderWindow game(VideoMode(900, 1000), "No Tank You");
+  // Set game variables
   Background background;
   PlayerOne player;
   PlayerTwo player_2;
-  Menu menu(900, 1000);
-  // Mine mine;
-  EndScreen endScreen(900, 1000);
-
   Movement movement;
+  // Create menu window
+  Menu menu(900, 1000);
+  // Create end screen window
+  EndScreen endScreen(900, 1000);
+  // Set movement boundaries
   movement.setBounds(0, 0, 900, 1000);
 
   bool inMenu = true;     // Track if we are in the menu
   bool gameOver = false;  // Track if the game is over
 
+  // While the game window is open do the following:
   while (game.isOpen()) {
     Event event;
     while (game.pollEvent(event)) {
+      // If the game is closed do the following:
       if (event.type == Event::Closed) {
+        // End the game
         game.close();
       }
 
+      // If the game is not over and user is not in the menu screen, then run
+      // the following code:
       if (!gameOver || !inMenu) {
         // Check for player health reaching 0
         if (player.getHealth() <= 0 || player_2.getHealth() <= 0) {
-          gameOver = true;
-          inMenu = true;  // Return to the menu when the game is over
-          // Add any additional actions you want when the game is over
+          gameOver = true;  // Set gameOver to true
+          inMenu = true;    // Return to the menu when the game is over
+          // Terminal messages:
           std::cout << "---------Game Over-----------" << std::endl;
           std::cout << "---------Thanks for playing---------" << std::endl;
         }
-        // Add save game functionality here
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
-            sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+        // User can save the game by pressing (Left) Ctrl + S
+        if (Keyboard::isKeyPressed(Keyboard::S) &&
+            Keyboard::isKeyPressed(Keyboard::LControl)) {
           std::cout << "Game Saved" << std::endl;
+          // Save data for both playerOne and playerTwo
           save_game(player, player_2);
         }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) &&
-            sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+        // User can load the game by pressing (Left) Ctrl + L
+        if (Keyboard::isKeyPressed(Keyboard::L) &&
+            Keyboard::isKeyPressed(Keyboard::LControl)) {
           std::cout << "Game Loaded" << std::endl;
+          // Load data for both playerOne and playerTwo
           load_game(player, player_2);
+          // Redraw the players
           player.draw(game);
           player_2.draw(game);
         }
       }
+
+      // If the player is in the menu screen
       if (inMenu) {
         if (event.type == Event::KeyReleased) {
           switch (event.key.code) {
-            case sf::Keyboard::Up:
+            case Keyboard::Up:
               menu.Moveup();  // Move selection up
               break;
 
-            case sf::Keyboard::Down:
+            case Keyboard::Down:
               menu.Movedown();  // Move selection down
               break;
 
-            case sf::Keyboard::Return:
+            case Keyboard::Return:
               if (gameOver) {
                 // If the game is over and Enter is pressed, exit the game
                 game.close();
               } else {
                 switch (menu.GetPressedItem()) {
+                  // If PLAY is pressed, run the following:
                   case 0:
                     std::cout << "---------Pressed Play----------" << std::endl;
                     inMenu = false;  // Exit the menu
                     break;
-
+                  // If RULES is pressed, run the following:
                   case 1:
                     std::cout << "---------Pressed Rules---------" << std::endl;
                     // logic for displaying rules
@@ -106,20 +121,20 @@ int main() {
                               << std::endl;
 
                     break;
-
+                  // If EXIT is pressed, run the following:
                   case 2:
                     std::cout << "---------Pressed Exit---------" << std::endl;
                     std::cout << "---------Thanks for playing---------"
                               << std::endl;
                     game.close();
                     break;
-
+                  // Else exit
                   default:
                     break;
                 }
               }
               break;
-
+            // Else exit
             default:
               break;
           }
@@ -129,25 +144,26 @@ int main() {
         menu.draw(game);
       }
     }
-
+    // Clear the game
     game.clear();
-
+    // If the user is not in the menu screen
     if (!inMenu) {
-      // Handle game events here
+      // The following handles the game events:
+      // Movement inputs
       player.handleInput();
       player_2.handleInput();
-
+      // Shooting inputs
       player.ShootingInput(player);
       player_2.ShootingInput(player_2);
-
+      // Checks for health changes
       player.health(player, player_2);
       player_2.health(player_2, player);
-
+      // Draws the background, playerOne and playerTwo on the game window
       background.draw(game);
-      // mine.draw(game);
       player.draw(game);
       player_2.draw(game);
     } else {
+      // Else if the game is over run the following:
       if (gameOver) {
         // Display the end screen
         endScreen.draw(game);
@@ -156,7 +172,7 @@ int main() {
         menu.draw(game);
       }
     }
-
+    // display the game window
     game.display();
   }
 

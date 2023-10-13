@@ -12,23 +12,25 @@ using namespace sf;
 
 class PlayerTwo : public Tank {
  private:
-  RectangleShape tankRect;
-  float barrelLength;
-  RectangleShape barrelRect;
+  RectangleShape tankRect;    // tank rectangular shape
+  float barrelLength;         // barrel length
+  RectangleShape barrelRect;  // tank barrel rectnagular shape
   Shooting* ammo;
-  int ammo_count = 1;
-  Texture tankTexture;
-  Texture tankBarrelTexture;
+  int ammo_count = 1;         // set ammo to 1
+  Texture tankTexture;        // tank texture
+  Texture tankBarrelTexture;  // barrel texture
 
  public:
   PlayerTwo();  // Default constructor
-  // ~PlayerTwo();
-  void handleInput();  // Arrow key inputs
-  void draw(RenderWindow& window);
-  void reload();
+  // ~PlayerTwo(); // destructor
+  void handleInput();               // Arrow key inputs
+  void draw(RenderWindow& window);  // draw playerTwo to game window
+
   // Shooting mechanisms for player 2
+  void reload();
   void fire();
   void ShootingInput(PlayerTwo p2);
+
   // Collision for player 2
   void health(PlayerTwo p2, PlayerOne p1);
   bool isHit(PlayerTwo& p2, PlayerOne& p1);

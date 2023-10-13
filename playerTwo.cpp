@@ -22,19 +22,23 @@ PlayerTwo::PlayerTwo() {
   // Adjust the length of the barrel as needed
   barrelLength = 20.0f;
 
+  // Checks if the red tank texture have correctly loaded:
   if (!tankTexture.loadFromFile("tankRed.png")) {
-    // handle error...
+    std::cout << "Error: Red Tank texture could not be loaded" << std::endl;
   }
   if (!tankBarrelTexture.loadFromFile("tankBarrelRed.png")) {
-    // handle error...
+    std::cout << "Error: Red Tank Barrel texture could not be loaded"
+              << std::endl;
   }
 
+  // Sets the textures for red tank and barrel
   tankTexture.setRepeated(true);
   tankRect.setTexture(&tankTexture);
   tankBarrelTexture.setRepeated(true);
   barrelRect.setTexture(&tankBarrelTexture);
-
+  // Create a dynamic array for one bullet
   ammo = new Shooting[ammo_count];  // 1 bullet
+  // Sets red tank bullet colour to red
   ammo[0].setBulletColor(Color::Red);
 }
 
@@ -72,6 +76,7 @@ void PlayerTwo::draw(RenderWindow& window) {
   // Calculate the position and rotation of the barrel
   float barrelX = getX() + barrelLength * cos(getRotation() * M_PI / 180.f);
   float barrelY = getY() + barrelLength * sin(getRotation() * M_PI / 180.f);
+  // Set barrel position and rotation depending on tank movement
   barrelRect.setPosition(barrelX, barrelY);
   barrelRect.setRotation(getRotation());
 
@@ -130,6 +135,7 @@ void PlayerTwo::reload() {
 
 // collison detection
 void PlayerTwo::health(PlayerTwo p2, PlayerOne p1) {
+  // if the red tank is hit by the blue bullet take one damage
   if (isHit(p2, p1)) {
     p_health--;
     std::cout << "Red Tank has " << p_health << " health!" << std::endl;
@@ -144,12 +150,13 @@ bool PlayerTwo::isHit(PlayerTwo& p2, PlayerOne& p1) {
   // Check for collisions with PlayerOne's bullets
   for (int i = 0; i < ammo_count; i++) {
     if (p1.getAmmo()[i].isShot()) {
+      // Gets the bullet position
       Vector2f bulletPosition = p1.getAmmo()[i].getPosition();
       int x = bulletPosition.x;
       int y = bulletPosition.y;
-
       float distance = sqrt((x - target_x) * (x - target_x) +
                             (y - target_y) * (y - target_y));
+      // If the red tank is hit by blue tank turn hit to true:
       if (distance < (t_depth + b_depth)) {
         hit = true;
         p1.getAmmo()[i].reload();  // Make the bullet disappear
@@ -159,46 +166,6 @@ bool PlayerTwo::isHit(PlayerTwo& p2, PlayerOne& p1) {
   }
   return hit;
 }
-
-// float PlayerTwo::clamp(float value, float minn, float maxx) {
-//   if (value < minn) {
-//     return minn;
-//   } else if (value > maxx) {
-//     return maxx;
-//   } else {
-//     return value;
-//   }
-// }
-
-// int PlayerTwo::collision(PlayerTwo& R1) {
-//   // find the closest point of the circle to rectangle
-//   float closestX = clamp(600, getX(), getX() - 50);
-//   float closestY = clamp(500, getY(), getY() - 20);
-
-//   // get the distance between the two points
-//   float distanceX = 600 - closestX;
-//   float distanceY = 500 - closestY;
-
-//   // checking the conditions are met and collision occurs, return 1
-//   float distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-//   if (distanceSquared < 400 && closestX != 600 && closestY != 500) {
-//     return 3;
-//   } else if (distanceSquared < 400 && closestX == 600) {
-//     return 2;
-//   } else if (distanceSquared < 400 && closestY == 500) {
-//     return 1;
-//   } else {
-//     return 0;  // no collision hence return 0
-//   }
-// }
-
-// void PlayerTwo::collideHealth(PlayerTwo& R1) {
-//   if (collision(R1) == 3 || collision(R1) == 2 || collision(R1) == 1) {
-//     p_health--;
-//     std::cout << "Red Tank lost health, remaining health : " << p_health
-//               << std::endl;
-//   }
-// }
 
 // PlayerTwo::~PlayerTwo() {
 //   if (ammo) {

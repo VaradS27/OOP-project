@@ -29,7 +29,6 @@ Movement::Movement()
   x = distrX(eng);
   y = distrY(eng);
 }
-// change maxX and maxY if we change the size of the game
 
 void Movement::moveForward() {
   // Calculate new position after moving forward
@@ -38,6 +37,7 @@ void Movement::moveForward() {
 
   // Check if the new position is within the boundaries
   if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
+    // If it is a valid movement the tank will move forward
     x = newX;
     y = newY;
   }
@@ -50,12 +50,14 @@ void Movement::moveBackward() {
 
   // Check if the new position is within the boundaries
   if (newX >= minX && newX <= maxX && newY >= minY && newY <= maxY) {
+    // If it is a valid movement the tank will move backward
     x = newX;
     y = newY;
   }
 }
 
 void Movement::rotateLeft() {
+  // rotation angle
   rotation -= 3.0f;
   if (rotation < 0.0f) {
     rotation += 360.0f;
@@ -63,6 +65,7 @@ void Movement::rotateLeft() {
 }
 
 void Movement::rotateRight() {
+  // rotation angle
   rotation += 3.0f;
   if (rotation >= 360.0f) {
     rotation -= 360.0f;
@@ -70,6 +73,7 @@ void Movement::rotateRight() {
 }
 
 void Movement::setBounds(float minX, float minY, float maxX, float maxY) {
+  // Set the following boundaries:
   this->minX = minX;
   this->minY = minY;
   this->maxX = maxX;

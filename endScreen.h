@@ -6,18 +6,18 @@ using namespace sf;
 
 class EndScreen {
  public:
-  EndScreen(int width, int height);
-  ~EndScreen();
+  EndScreen(int width, int height); // default constructor
+  ~EndScreen(); // destructor
 
-  // Add a method to draw the end screen
+  // draw() method for the end screen
   void draw(sf::RenderWindow &window);
 
  private:
-  sf::Font font;
-  sf::Text endText;
+  sf::Font font; // font for text on the end screen
+  sf::Text endText; // text that will be displayed on the end screen
   sf::Text exitButton;  // Only one button needed
-  RectangleShape endBackground;
-  Texture endBack;
+  RectangleShape endBackground; // End Screen will be a rectangular shape
+  Texture endBack; // Texture for end screen
 };
 
 #endif

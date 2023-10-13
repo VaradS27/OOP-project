@@ -6,11 +6,11 @@ using namespace sf;
 
 class Background {
  private:
-  RectangleShape backgroundRect;  // 16:9 ratio for it will be a rectangle
-  Texture backgroundTexture;
+  RectangleShape backgroundRect;  // Rectangular background
+  Texture backgroundTexture;  // Bacground Texture
  public:
   Background();  // default constructor for background
-  void draw(RenderWindow& window);
+  void draw(RenderWindow& window);  // draw() to draw background in 'game' window
 };
 
 #endif

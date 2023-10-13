@@ -8,9 +8,9 @@ class Shooting {
  private:
   CircleShape* body;  // Changed from RectangleShape* to CircleShape*
   // CircleShape* body2;
-  bool shot;
-  float angle;
-  float bulletSpeed;
+  bool shot;          // checks if tank has already shot
+  float angle;        // angle of bullet
+  float bulletSpeed;  // bullet speed
 
  public:
   Shooting();                    // default constuctor
@@ -23,6 +23,8 @@ class Shooting {
   void useShot(Vector2f position, float tankRotation);
   void reload();
   ~Shooting();
+
+  // Used for unit testing (getters and setters): 
   Vector2f getPosition() { return body->getPosition(); }
   void setBulletColor(const Color& color) { body->setFillColor(color); };
   CircleShape* getBody() { return body; };

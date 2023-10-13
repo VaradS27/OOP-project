@@ -4,9 +4,12 @@
 
 class Movement {
  private:
+  // x and y value of tanks
   float x;
   float y;
+  // rotation of tank
   float rotation;
+  // speed of tank
   float speed;
   float minX;  // Minimum X boundary
   float minY;  // Minimum Y boundary
@@ -14,16 +17,22 @@ class Movement {
   float maxY;  // Maximum Y boundary
  public:
   Movement();  // default constructor
-  virtual ~Movement(){};
+  virtual ~Movement(){}; // virtual destructor
+  // movement inputs
   void moveForward();
   void moveBackward();
   void rotateLeft();
   void rotateRight();
+  // boundaries for tanks - make sure they don't go outside the map
   void setBounds(float minX, float minY, float maxX, float maxY);
+  // update boundaries if needed
   void updateBounds();
+  // get x and y values of tank
   float getX();
   float getY();
+  // get rotation of tank
   float getRotation();
+  // generate a random location for tank
   float randomFloat(float min, float max);
   // Setter functions for position and rotation
   void set_playerPosition(float x, float y) {
