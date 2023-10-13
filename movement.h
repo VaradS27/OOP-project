@@ -2,6 +2,17 @@
 #define MOVEMENT_H
 #include <random>
 
+// The Movement class is all about controlling how the tanks move around in the
+// game. It keeps track of the tank’s position (x, y), rotation (rotation), and
+// speed (speed). The moveForward(), moveBackward(), rotateLeft(), and
+// rotateRight() methods are used to change the tank’s position and rotation
+// based on user input. The class also makes sure the tanks don’t go outside the
+// game map by setting boundaries (minX, minY, maxX, maxY) with setBounds() and
+// updating them with updateBounds(). You can get the current position and
+// rotation of the tank with getX(), getY(), and getRotation(). There’s also a
+// cool feature where it can generate a random location for the tank with
+// randomFloat().
+
 class Movement {
  private:
   // x and y value of tanks
@@ -16,8 +27,8 @@ class Movement {
   float maxX;  // Maximum X boundary
   float maxY;  // Maximum Y boundary
  public:
-  Movement();  // default constructor
-  virtual ~Movement(){}; // virtual destructor
+  Movement();             // default constructor
+  virtual ~Movement(){};  // virtual destructor
   // movement inputs
   void moveForward();
   void moveBackward();

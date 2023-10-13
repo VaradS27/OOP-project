@@ -10,6 +10,13 @@ class PlayerOne;  // Forward declaration of PlayerOne class.
 
 using namespace sf;
 
+// The PlayerTwo class is like the control center for the second player’s tank in
+// the game. It keeps track of the tank’s shape, barrel length, ammo, and
+// textures. It also handles user inputs for moving and shooting, and it can
+// draw the tank on the game window. The class also has methods for firing and
+// reloading ammo, checking if the tank has been hit, and updating the tank’s
+// health. Plus, it makes sure the tank doesn’t go outside the game map.
+
 class PlayerTwo : public Tank {
  private:
   RectangleShape tankRect;    // tank rectangular shape
