@@ -37,8 +37,8 @@ class PlayerOne : public Tank {
     return this->p_health;  // Inherited from Tank
   }
   // For Unit Tests:
-  RectangleShape get_tankRect() { return tankRect; };
-  RectangleShape get_barrelRect() { return barrelRect; };
+  RectangleShape& get_tankRect() { return tankRect; };
+  RectangleShape& get_barrelRect() { return barrelRect; };
 };
 
 #endif

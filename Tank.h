@@ -15,7 +15,8 @@ class Tank : public Movement {
   virtual void set_tdepth() { t_depth = 35; };
   virtual void set_bdepth() { b_depth = 5; };
   virtual void set_health() { p_health = 10; };
-  virtual ~Tank() {};
+  virtual void set_playerHealth(int health) { p_health = health; };
+  virtual ~Tank(){};
 };
 
 #endif

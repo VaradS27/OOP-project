@@ -38,8 +38,8 @@ class PlayerTwo : public Tank {
   }
 
   // For Unit Tests:
-  RectangleShape get_tankRect() { return tankRect; };
-  RectangleShape get_barrelRect() { return barrelRect; };
+  RectangleShape& get_tankRect() { return tankRect; };
+  RectangleShape& get_barrelRect() { return barrelRect; };
 };
 
 #endif

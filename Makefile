@@ -8,7 +8,7 @@ CXXFLAGS = -Wall
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Source files
-SRCS = main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp playerOne.cpp playerTwo.cpp mine.cpp endScreen.cpp Tank.cpp
+SRCS = main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp playerOne.cpp playerTwo.cpp GameData.cpp endScreen.cpp Tank.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

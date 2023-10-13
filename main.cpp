@@ -2,16 +2,18 @@
 #include <ctime>
 #include <iostream>
 
+#include "GameData.h"
 #include "background.h"
 #include "endScreen.h"
 #include "menu.h"
-// #include "mine.h"
 #include "playerOne.h"
 #include "playerTwo.h"
 
 using namespace sf;
 
-// g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp playerOne.cpp playerTwo.cpp Tank.cpp mine.cpp endScreen.cpp -lsfml-graphics -lsfml-window -lsfml-system
+// g++ -Wall main.cpp background.cpp menu.cpp Shooting.cpp movement.cpp
+// playerOne.cpp playerTwo.cpp GameData.cpp Tank.cpp mine.cpp endScreen.cpp
+// -lsfml-graphics -lsfml-window -lsfml-system
 
 int main() {
   RenderWindow game(VideoMode(900, 1000), "No Tank You");
@@ -44,8 +46,21 @@ int main() {
           std::cout << "---------Game Over-----------" << std::endl;
           std::cout << "---------Thanks for playing---------" << std::endl;
         }
-      }
+        // Add save game functionality here
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
+            sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+          std::cout << "Game Saved" << std::endl;
+          save_game(player, player_2);
+        }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::L) &&
+            sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
+          std::cout << "Game Loaded" << std::endl;
+          load_game(player, player_2);
+          player.draw(game);
+          player_2.draw(game);
+        }
+      }
       if (inMenu) {
         if (event.type == Event::KeyReleased) {
           switch (event.key.code) {
@@ -71,15 +86,25 @@ int main() {
                   case 1:
                     std::cout << "---------Pressed Rules---------" << std::endl;
                     // logic for displaying rules
-                    std::cout << "The objective of the game is to destroy the enemy tank whilst dodging the enemy bullets." << std::endl;
-                    std::cout << "Each tank has 10 health with the bullets dealing 1 damage point." << std::endl;
-                    std::cout << "| Player 1's controls :- 'W','A','S','D','SPACE' |" << std::endl;
-                    std::cout << "| Player 2's controls :- 'Up-Arrow','Left-Arrow','Down-Arrow','Right-Arrow','Left-Shift' |" << std::endl;
+                    std::cout << "The objective of the game is to destroy the "
+                                 "enemy tank whilst dodging the enemy bullets."
+                              << std::endl;
+                    std::cout << "Each tank has 10 health with the bullets "
+                                 "dealing 1 damage point."
+                              << std::endl;
+                    std::cout
+                        << "| Player 1's controls :- 'W','A','S','D','SPACE' |"
+                        << std::endl;
+                    std::cout << "| Player 2's controls :- "
+                                 "'Up-Arrow','Left-Arrow','Down-Arrow','Right-"
+                                 "Arrow','Left-Shift' |"
+                              << std::endl;
                     break;
 
                   case 2:
                     std::cout << "---------Pressed Exit---------" << std::endl;
-                    std::cout << "---------Thanks for playing---------" << std::endl;
+                    std::cout << "---------Thanks for playing---------"
+                              << std::endl;
                     game.close();
                     break;
 
@@ -113,12 +138,9 @@ int main() {
       player_2.health(player_2, player);
 
       background.draw(game);
-      //mine.draw(game);
+      // mine.draw(game);
       player.draw(game);
       player_2.draw(game);
-      // check collision with the mine
-      // player.collideHealth(player);
-      // player_2.collideHealth(player_2);
     } else {
       if (gameOver) {
         // Display the end screen
