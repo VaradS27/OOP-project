@@ -16,10 +16,10 @@ using namespace sf;
 
 class Shooting {
  private:
-  CircleShape* body;  // Changed from RectangleShape* to CircleShape*
+  CircleShape* body_bullet;  // Changed from RectangleShape* to CircleShape*
   // CircleShape* body2;
   bool shot;          // checks if tank has already shot
-  float angle;        // angle of bullet
+  float bulletAngle;        // angle of bullet
   float bulletSpeed;  // bullet speed
 
  public:
@@ -35,9 +35,9 @@ class Shooting {
   ~Shooting();
 
   // Used for unit testing (getters and setters):
-  Vector2f getPosition() { return body->getPosition(); }
-  void setBulletColor(const Color& color) { body->setFillColor(color); };
-  CircleShape* getBody() { return body; };
+  Vector2f getPosition() { return body_bullet->getPosition(); }
+  void setBulletColor(const Color& color) { body_bullet->setFillColor(color); };
+  CircleShape* getBody() { return body_bullet; };
 };
 
 #endif

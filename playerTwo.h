@@ -43,7 +43,7 @@ class PlayerTwo : public Tank {
   bool isHit(PlayerTwo& p2, PlayerOne& p1);
   Shooting* getAmmo() { return ammo; };
   int getHealth() {
-    return this->p_health;  // Inherited from Tank
+    return this->player_health;  // Inherited from Tank
   }
 
   // For Unit Tests:

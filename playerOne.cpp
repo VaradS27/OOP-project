@@ -135,8 +135,8 @@ void PlayerOne::health(PlayerOne p1, PlayerTwo p2) {
   // If blue tank is hit by red bullet, then blue tank will take one damage of
   // health
   if (isHit(p1, p2)) {
-    p_health--;
-    std::cout << "Blue Tank has " << p_health << " health!" << std::endl;
+    player_health--;
+    std::cout << "Blue Tank has " << player_health << " health!" << std::endl;
   }
 }
 
@@ -156,7 +156,7 @@ bool PlayerOne::isHit(PlayerOne& p1, PlayerTwo& p2) {
         float distance = sqrt((x - target_x) * (x - target_x) +
                               (y - target_y) * (y - target_y));
         // Red bullet has hit the blue tank, run the following code:
-        if (distance < (t_depth + b_depth)) {
+        if (distance < (tank_depth + bullet_depth)) {
           hit = true;
           p2.getAmmo()[i].reload();  // Make the bullet disappear
           break;  // No need to check further if a collision is detected

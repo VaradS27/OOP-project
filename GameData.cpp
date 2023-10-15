@@ -25,26 +25,26 @@ void load_game(PlayerOne& playerOne, PlayerTwo& playerTwo) {
 
   if (file.is_open()) {
     // Initialisation of store varibles
-    int health;
-    float positionX, positionY, rotation;
+    int player_health;
+    float positionX, positionY, tank_rotation;
 
-    file >> health;
-    playerOne.set_playerHealth(health);
+    file >> player_health;
+    playerOne.set_playerHealth(player_health);
     file >> positionX >> positionY;
     // set_playerPosition function to update tank's position
     playerOne.set_playerPosition(positionX, positionY);
-    file >> rotation;
+    file >> tank_rotation;
     // set_playerRotation function to update the barrel's rotation
-    playerOne.set_playerRotation(rotation);
+    playerOne.set_playerRotation(tank_rotation);
 
-    file >> health;
-    playerTwo.set_playerHealth(health);
+    file >> player_health;
+    playerTwo.set_playerHealth(player_health);
     file >> positionX >> positionY;
     // set_playerPosition function to update tank's position
     playerTwo.set_playerPosition(positionX, positionY);
-    file >> rotation;
+    file >> tank_rotation;
     // set_playerRotation function to update the barrel's rotation
-    playerTwo.set_playerRotation(rotation);
+    playerTwo.set_playerRotation(tank_rotation);
 
     file.close();
   }

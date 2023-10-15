@@ -21,7 +21,7 @@ int main() {
   RenderWindow game(VideoMode(900, 1000), "No Tank You");
   // Set game variables
   Background background;
-  PlayerOne player;
+  PlayerOne player_1;
   PlayerTwo player_2;
   Movement movement;
   // Create menu window
@@ -48,7 +48,7 @@ int main() {
       // the following code:
       if (!gameOver || !inMenu) {
         // Check for player health reaching 0
-        if (player.getHealth() <= 0 || player_2.getHealth() <= 0) {
+        if (player_1.getHealth() <= 0 || player_2.getHealth() <= 0) {
           gameOver = true;  // Set gameOver to true
           inMenu = true;    // Return to the menu when the game is over
           // Terminal messages:
@@ -60,16 +60,16 @@ int main() {
             Keyboard::isKeyPressed(Keyboard::LControl)) {
           std::cout << "Game Saved" << std::endl;
           // Save data for both playerOne and playerTwo
-          save_game(player, player_2);
+          save_game(player_1, player_2);
         }
         // User can load the game by pressing (Left) Ctrl + L
         if (Keyboard::isKeyPressed(Keyboard::L) &&
             Keyboard::isKeyPressed(Keyboard::LControl)) {
           std::cout << "Game Loaded" << std::endl;
           // Load data for both playerOne and playerTwo
-          load_game(player, player_2);
+          load_game(player_1, player_2);
           // Redraw the players
-          player.draw(game);
+          player_1.draw(game);
           player_2.draw(game);
         }
       }
@@ -150,17 +150,17 @@ int main() {
     if (!inMenu) {
       // The following handles the game events:
       // Movement inputs
-      player.handleInput();
+      player_1.handleInput();
       player_2.handleInput();
       // Shooting inputs
-      player.ShootingInput(player);
+      player_1.ShootingInput(player_1);
       player_2.ShootingInput(player_2);
       // Checks for health changes
-      player.health(player, player_2);
-      player_2.health(player_2, player);
+      player_1.health(player_1, player_2);
+      player_2.health(player_2, player_1);
       // Draws the background, playerOne and playerTwo on the game window
       background.draw(game);
-      player.draw(game);
+      player_1.draw(game);
       player_2.draw(game);
     } else {
       // Else if the game is over run the following:
